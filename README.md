@@ -47,5 +47,5 @@ npm i bootstrap --save
 ## Development
 
 Want to improve? Great!
-Make the changes and raise a PR. Reach out to me over kankvish@gmail.com
+Make the changes and raise a PR. Reach out to me over atulsingh15743@gmail.com
 
