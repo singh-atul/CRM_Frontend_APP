@@ -105,10 +105,10 @@ function Login() {
                                         <h4 className="text-center">Login</h4>
                                             <form  onSubmit={loginFn}>
                                                 <div className="input-group m-1">
-                                                    <input type="text" className="form-control" placeholder="User Id" id="userId"  required />
+                                                    <input type="text" className="form-control" placeholder="User Id" id="userId" required />
                                                 </div>
                                                 <div className="input-group m-1">
-                                                    <input type="password" className="form-control" placeholder="Password" id="password" required/>
+                                                    <input type="password" className="form-control" placeholder="Password"  id="password" required/>
                                                 </div>
 
                                                 <div className="input-group m-1">
