@@ -5,13 +5,14 @@ This code base contains logic/structure  for creating the User Interface for the
 
 ## Features
 * User Handling
-  * Navgation bar to display the logo and Logout button
+  * SideNavigation bar to display the logo and Logout button
   * Logout Form to clear the local storage and redirect the user back to the login page 
   * Fetch and display the list of all user
   * Filter the user based upon there name, status, type and id
   * Download the fetched user details inform of pdf or csv
   * Update the user detail by clicking on the specific user detail
   * Update of the user will happend using the modal 
+  * Added Circular Progress bar to notify the count of tickets at each state
 
 
 
@@ -32,6 +33,9 @@ The whole repo is divided into multiple branches. Each branch contains code for 
 ```sh
 cd crm_frontend
 npm install @material-ui/core @material-table/core @material-table/exporters --save
+npm i bootstrap-icons
+npm i @coreui/coreui/
+npm i react-circular-progressbar
 npm start
 ```
 React application will run on port 3005. You can configure it in .env
