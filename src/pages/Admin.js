@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import MaterialTable from "@material-table/core";
 import { ExportCsv, ExportPdf } from '@material-table/exporters';
 import { Modal, Button } from 'react-bootstrap'
-import Navbar from "../components/Navbar";
+import Sidebar from '../components/Sidebar'
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 import axios from 'axios';
 import '../styles/admin.css';
@@ -91,59 +92,102 @@ function Admin() {
       }
   
       return (
-          <div className="bg-light">
-              <Navbar />
-              <div className="container">
+        <div className="row bg-light">
+            <div className="col-1"><Sidebar home='/' /></div>
+            <div className="col my-4 vh-100">
+            <div className="container ">
+            <div >
                   <h3 className="text-primary text-center">Welcome, {currUserName}</h3>
                   <p className="text-muted text-center">Take a quick looks at your admin stats below. </p>
   
                   {/* card */}
-                  <div className="row my-5 text-center">
+                  <div className="row my-5 mx-2 text-center">
   
-                      <div className="col">
-                          <div className="card shadow  bg-success" style={{ width: 16 + 'rem' }}>
-                              <div className="card-body">
-                                  <h5 className="card-subtitle mb-2 text-white">Completed</h5>
-                                  <hr />
-                                  <div className="col text-white">Some value</div>
+                        <div className="col-xs-12 col-lg-3 col-md-6 my-1">
+                            <div className="card  cardItem shadow  bg-primary text-dark bg-opacity-25 borders-b" style={{ width: 15 + 'rem' }}>
+                                <div className="card-body">
+                                    <h5 className="card-subtitle mb-2"><i class="bi bi-pencil text-primary mx-2"></i>Open </h5>
+                                    <hr />
+                                    <div className="row">
+                                        <div className="col">  
+                                            <h1 className="col text-dark mx-4">8</h1> 
+                                        </div>
+                                        <div className="col">
+                                            <div style={{ width: 40, height: 40 }}>
+                                                <CircularProgressbar value={80} styles={buildStyles({
+                                                        textColor: "red",
+                                                        pathColor: "darkblue",
+                                                    })} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+  
+                      <div className="col-xs-12 col-lg-3 col-md-6 my-1">
+                            <div className="card shadow  bg-warning text-dark bg-opacity-25 borders-y" style={{ width: 15 + 'rem' }}>
+                                <div className="card-body">
+                                    <h5 className="card-subtitle mb-2"><i class="bi bi-lightning-charge text-warning mx-2"></i>Progress </h5>
+                                    <hr />
+                                    <div className="row">
+                                        <div className="col">  <h1 className="col text-dark mx-4">4</h1> </div>
+                                        <div className="col">
+                                            <div style={{ width: 40, height: 40 }}>
+                                                <CircularProgressbar value={80} styles={buildStyles({
+                                                    textColor: "red",
+                                                    pathColor: "darkgoldenrod",
+                                                })} />
+                                            </div>
+                                        </div>
+                                    </div>
                               </div>
                           </div>
                       </div>
   
-                      <div className="col">
-                          <div className="card shadow bg-warning" style={{ width: 16 + 'rem' }}>
-                              <div className="card-body">
-                                  <h5 className="card-subtitle mb-2 text-white">Warning</h5>
-                                  <hr />
-                                  <div className="col text-white">Some value</div>
-                              </div>
-                          </div>
-                      </div>
+                      <div className="col-xs-12 col-lg-3 col-md-6 my-1">
+                                <div className="card shadow  bg-success text-dark bg-opacity-25 borders-g" style={{ width: 15 + 'rem' }}>
+                                    <div className="card-body">
+                                        <h5 className="card-subtitle mb-2"><i class="bi bi-check2-circle text-success mx-2"></i>Closed </h5>
+                                        <hr />
+                                        <div className="row">
+                                            <div className="col">  <h1 className="col text-dark mx-4">2</h1> </div>
+                                            <div className="col">
+                                                <div style={{ width: 40, height: 40 }}>
+                                                    <CircularProgressbar value={80} styles={buildStyles({
+                                                        textColor: "red",
+                                                        pathColor: "darkolivegreen",
+                                                    })} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
   
-                      <div className="col">
-                          <div className="card shadow bg-primary" style={{ width: 16 + 'rem' }}>
-                              <div className="card-body">
-                                  <h5 className="card-subtitle mb-2 text-white">Primary</h5>
-                                  <hr />
-                                  <div className="col text-white">Some value</div>
-                              </div>
-                          </div>
-                      </div>
-  
-                      <div className="col">
-                          <div className="card shadow bg-danger" style={{ width: 16 + 'rem' }}>
-                              <div className="card-body">
-                                  <h5 className="card-subtitle mb-2 text-white">Pending</h5>
-                                  <hr />
-                                  <div className="col text-white">Some value</div>
-                              </div>
-                          </div>
-                      </div>
+                            <div className="col-xs-12 col-lg-3 col-md-6 my-1">
+                                <div className="card shadow  bg-secondary text-dark bg-opacity-25 borders-grey" style={{ width: 15 + 'rem' }}>
+                                    <div className="card-body">
+                                        <h5 className="card-subtitle mb-2"><i class="bi bi-slash-circle text-secondary mx-2"></i>Blocked </h5>
+                                        <hr />
+                                        <div className="row">
+                                            <div className="col">  <h1 className="col text-dark mx-4">2</h1> </div>
+                                            <div className="col">
+                                                <div style={{ width: 40, height: 40 }}>
+                                                    <CircularProgressbar value={20} styles={buildStyles({
+                                                        textColor: "red",
+                                                        pathColor: "black",
+                                                    })} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
   
                   </div>
   
                  <hr />
-  
                   
                   {/* <MuiThemeProvider theme={theme}> */}
                   <MaterialTable
@@ -197,7 +241,7 @@ function Admin() {
                               exportFunc: (cols, datas) => ExportCsv(cols, datas, 'userRecords')
                           }],
                           headerStyle: {
-                              backgroundColor: '#106cfc',
+                              backgroundColor: 'darkblue',
                               color: '#FFF'
                             },
                             rowStyle: {
@@ -275,7 +319,8 @@ function Admin() {
                   ) : (
                       ""
                   )}
-                   
+                   </div>
+              </div>
               </div>
   
           </div>
