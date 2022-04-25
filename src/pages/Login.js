@@ -97,7 +97,6 @@ function Login() {
 
     }
     const checkAuth = ()=>{
-        console.log("isAuthenticated",isAuthenticated,window.location.search);
         if(isAuthenticated){
             const {code} = queryString.parse(window.location.search)
             user.code = code
@@ -133,7 +132,7 @@ function Login() {
     }
     return (
         
-        !checkAuth() && (<div id="loginPage">
+        !checkAuth() && (<div id="loginPage">      
             <div id="loginPage" className="bg-primary d-flex justify-content-center align-items-center vh-100">
                 <div className="card m-5 p-5" >
                     <div className="row m-2">
