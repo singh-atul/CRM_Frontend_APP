@@ -8,6 +8,7 @@ import '@coreui/coreui/dist/css/coreui.min.css';
 import '@coreui/coreui/dist/js/coreui.min.js';
 import './App.css';
 import Login from "./pages/Login";
+
 import Customer from "./pages/Customer";
 import Engineer from "./pages/Engineer";
 import Admin from "./pages/Admin";
@@ -21,7 +22,7 @@ function App() {
             path="/"
             element={
               <Suspense fallback={<div className="loader"></div>}>
-                <Login />
+                  <Login />
               </Suspense>
             }
         />
@@ -56,6 +57,7 @@ function App() {
 
       </Routes>
     </Router>
+    
   );
 }
 

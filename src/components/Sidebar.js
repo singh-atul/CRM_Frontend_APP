@@ -1,14 +1,12 @@
 import { CSidebar, CSidebarNav, CNavTitle, CNavItem } from '@coreui/react';
 import '../styles/sidebar.css'
 import { Link } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+
+
 function Sidebar() {
-  const logout=()=>{
-    localStorage.clear();
-    window.location.href ="/"
-  }
+  const { logout } = useAuth0();
   return (
-
-
     <CSidebar unfoldable className='vh-100 bg-black' >
       
       <CSidebarNav>

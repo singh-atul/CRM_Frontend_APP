@@ -5,13 +5,10 @@ This code base contains logic/structure  for creating the User Interface for the
 
 ## Features
 * User Handling
-  * Navgation bar to display the logo and Logout button
-  * Logout Form to clear the local storage and redirect the user back to the login page 
-  * Fetch and display the list of all user
-  * Filter the user based upon there name, status, type and id
-  * Download the fetched user details inform of pdf or csv
-  * Update the user detail by clicking on the specific user detail
-  * Update of the user will happend using the modal 
+  * Added OAuth to allow customer to login using third party api
+  * OAuth supports login with OAuth2, github and google
+  * Once the user is authenticated by the OAuth application, its corresponding account gets created in the crm database
+  * Any user logged in using Oauth is set to CUSTOMER
 
 
 
@@ -31,7 +28,7 @@ The whole repo is divided into multiple branches. Each branch contains code for 
 * It is expected that the session_1 is up and running in your 
 ```sh
 cd crm_frontend
-npm install @material-ui/core @material-table/core @material-table/exporters --save
+npm install query-string @auth0/auth0-react
 npm start
 ```
 React application will run on port 3005. You can configure it in .env
