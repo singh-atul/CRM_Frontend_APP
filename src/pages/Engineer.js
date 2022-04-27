@@ -50,7 +50,7 @@ function Engineer() {
       setTicketStatusCount(Object.assign({}, data))
   }
   const fetchTickets = () => {
-    axios.get(BASE_URL + '/crm/api/v1/tickets/',
+    axios.get(`${BASE_URL}/crm/api/v1/tickets/`,
         {
             headers: {
             'x-access-token': localStorage.getItem("token")
@@ -74,7 +74,7 @@ function Engineer() {
 
 const updateTicket = (e) =>{
   e.preventDefault()
-  axios.put(BASE_URL + '/crm/api/v1/tickets/'+ selectedCurrTicket.id,selectedCurrTicket, {
+  axios.put(`${BASE_URL}/crm/api/v1/tickets/${selectedCurrTicket.id}`,selectedCurrTicket, {
       headers: {
           'x-access-token': localStorage.getItem("token")
       }
@@ -282,7 +282,7 @@ return (
                         exportFunc: (cols, datas) => ExportCsv(cols, datas, 'userRecords')
                     }],
                     headerStyle: {
-                        backgroundColor: '#106cfc',
+                        backgroundColor: 'darkblue',
                         color: '#FFF'
                       },
                       rowStyle: {

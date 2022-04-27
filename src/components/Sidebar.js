@@ -2,10 +2,13 @@ import { CSidebar, CSidebarNav, CNavTitle, CNavItem } from '@coreui/react';
 import '../styles/sidebar.css'
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
 
 
 function Sidebar() {
   const { logout } = useAuth0();
+  const history = useNavigate();
+
   return (
     <CSidebar unfoldable className='vh-100 bg-black' >
       
@@ -18,10 +21,10 @@ function Sidebar() {
         <CNavTitle className='text-light fw-normal'>
           A CRM app for all your needs...
         </CNavTitle>
-        <CNavItem href="#">
+        {/* <CNavItem href="#">
           <i className="bi bi-house text-white m-2"></i>
-          <Link to="/admin" className='text-decoration-none text-white mx-3'>Home</Link>
-        </CNavItem>
+          <Link to={window.location} className='text-decoration-none text-white mx-3'>Home</Link>
+        </CNavItem> */}
         
         <div onClick={logout}>
         <CNavItem href="#">

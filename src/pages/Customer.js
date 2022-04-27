@@ -53,7 +53,7 @@ function User() {
             setTicketStatusCount(Object.assign({}, data))
         }
         const fetchTickets = () => {
-          axios.get(BASE_URL + '/crm/api/v1/tickets/',
+          axios.get(`${BASE_URL}/crm/api/v1/tickets/`,
               {
                   headers: {
                   'x-access-token': localStorage.getItem("token")
@@ -62,6 +62,7 @@ function User() {
                   "userId":localStorage.getItem("userId")
               }
           ).then(function (response) {
+              console.log("######")
               if (response.status === 200) {
                     setTicketDetails(response.data);
                     updateTicketCounts(response.data)
@@ -79,7 +80,7 @@ function User() {
              title:e.target.title.value,
              description:e.target.description.value
         }
-        axios.post(BASE_URL + '/crm/api/v1/tickets/',data,{
+        axios.post(`${BASE_URL}/crm/api/v1/tickets/`,data,{
             headers: {
                 'x-access-token': localStorage.getItem("token")
             }
@@ -99,7 +100,7 @@ function User() {
 
       const updateTicket = (e) =>{
         e.preventDefault()
-        axios.put(BASE_URL + '/crm/api/v1/tickets/'+ selectedCurrTicket.id,selectedCurrTicket, {
+        axios.put(`${BASE_URL}/crm/api/v1/tickets/${selectedCurrTicket.id,selectedCurrTicket}`, {
             headers: {
                 'x-access-token': localStorage.getItem("token")
             }
@@ -303,16 +304,16 @@ function User() {
                               exportFunc: (cols, datas) => ExportCsv(cols, datas, 'userRecords')
                           }],
                           headerStyle: {
-                              backgroundColor: '#106cfc',
-                              color: '#FFF'
-                            },
-                            rowStyle: {
-                              backgroundColor: '#EEE',
-                            }
+                            backgroundColor: 'darkblue',
+                            color: '#FFF'
+                          },
+                          rowStyle: {
+                            backgroundColor: '#EEE',
+                          }
                       }}
                       title="TICKETS RAISED BY YOU"
                   />
-                  <input type="submit" className="form-control btn btn-primary" value="RAISE TICKET" onClick={()=>setTicketCreationModal(true)} />
+                  <input type="submit" className="form-control btn btn-primary my-2" value="RAISE TICKET" onClick={()=>setTicketCreationModal(true)} />
 
                 {
                     ticketCreationModal ? (

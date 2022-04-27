@@ -8,11 +8,12 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import axios from 'axios';
 import '../styles/admin.css';
 
+
 const BASE_URL =process.env.REACT_APP_SERVER_URL
 
 
 
-function Admin() {
+function Admin() {    
         const [userList, setUserList] = useState([]);
         const [userDetail, setUserDetail] = useState({});
         const [ticketDetails, setTicketDetails] = useState([]);
@@ -43,7 +44,7 @@ function Admin() {
 
 
         const fetchUsers = (userId) => {
-          axios.get(BASE_URL + '/crm/api/v1/users/' + userId, {
+          axios.get(`${BASE_URL}/crm/api/v1/users/${userId}`, {
               headers: {
                   'x-access-token': localStorage.getItem("token")
               }
@@ -63,7 +64,7 @@ function Admin() {
         }
 
         const fetchTickets = () => {
-            axios.get(BASE_URL + '/crm/api/v1/tickets/',
+            axios.get(`${BASE_URL}/crm/api/v1/tickets/`,
                 {
                     headers: {
                     'x-access-token': localStorage.getItem("token")
@@ -89,7 +90,7 @@ function Admin() {
               "userStatus": userDetail.userStatus,
               "userName": userDetail.name
           }
-          axios.put(BASE_URL + '/crm/api/v1/users/' + userDetail.userId,data, {
+          axios.put(`${BASE_URL}/crm/api/v1/users/${userDetail.userId}`,data, {
               headers: {
                   'x-access-token': localStorage.getItem("token")
               }
@@ -180,7 +181,7 @@ function Admin() {
 
     const updateTicket = (e) =>{
         e.preventDefault()
-        axios.put(BASE_URL + '/crm/api/v1/tickets/'+ selectedCurrTicket.id,selectedCurrTicket, {
+        axios.put(`${BASE_URL}/crm/api/v1/tickets/${selectedCurrTicket.id}`,selectedCurrTicket, {
             headers: {
                 'x-access-token': localStorage.getItem("token")
             }

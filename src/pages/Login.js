@@ -1,19 +1,21 @@
 import React, { useEffect,useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/login.css';
 import { useAuth0 } from "@auth0/auth0-react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import queryString from 'query-string'
+const BASE_URL=process.env.REACT_APP_SERVER_URL
 
-const BASE_URL =process.env.REACT_APP_SERVER_URL
 
 function Login() {
     const { loginWithRedirect, user,isAuthenticated } = useAuth0();
     const [showSignup, setShowSignup] = useState(false);
     const [message, setMessage] = useState("");
     const [userDetail, setUserDetail] = useState({});
-    
     const [userType, setValue] = useState("CUSTOMER")
+
+    const history = useNavigate();
 
     const loginFn = (e) => {
         const userId = document.getElementById("userId").value;
@@ -23,7 +25,7 @@ function Login() {
             password: password
         };
         e.preventDefault();
-        axios.post(BASE_URL + '/crm/api/v1/auth/signin', data)
+        axios.post(`${BASE_URL}/crm/api/v1/auth/signin`, data)
             .then(function (response) {
                 
                 if (response.status === 200) {
@@ -38,12 +40,12 @@ function Login() {
                         localStorage.setItem("userStatus", response.data.userStatus);
                         localStorage.setItem("token", response.data.accessToken);
                         if (response.data.userTypes === "CUSTOMER")
-                            window.location.href = "/customer";
+                            history('/customer');
                         else if ((response.data.userTypes === "ENGINEER"))
-                            window.location.href = "/engineer";
+                            history('/engineer'); 
                         else
-                            window.location.href = "/admin";
-                    }
+                            history('/admin');          
+                        }
                 }
             })
             .catch(function (error) {
@@ -69,10 +71,10 @@ function Login() {
         };
         e.preventDefault();
 
-        axios.post(BASE_URL + '/crm/api/v1/auth/signup', data)
+        axios.post(`${BASE_URL}/crm/api/v1/auth/signup`, data)
             .then(function (response) {
                 if (response.status === 201) {
-                    window.location.href = "/";
+                   history("/");
                 }
             })
             .catch(function (error) {
@@ -100,7 +102,7 @@ function Login() {
         if(isAuthenticated){
             const {code} = queryString.parse(window.location.search)
             user.code = code
-            axios.post(BASE_URL + '/crm/api/v1/auth/oauthsignin', user).then(function (response) {
+            axios.post(`${BASE_URL}/crm/api/v1/auth/oauthsignin`, user).then(function (response) {
             if (response.status === 200) {
                 if (response.data.message) {
                     setMessage(response.data.message)
@@ -113,12 +115,12 @@ function Login() {
                     localStorage.setItem("userStatus", response.data.userStatus);
                     localStorage.setItem("token", response.data.accessToken);
                     if (response.data.userTypes === "CUSTOMER")
-                        window.location.href = "/customer";
+                        history('/customer');
                     else if ((response.data.userTypes === "ENGINEER"))
-                        window.location.href = "/engineer";
+                        history('/engineer');
                     else
-                        window.location.href = "/admin";
-                }
+                        history('/admin');                 
+                    }
             }
         })
         .catch(function (error) {
@@ -142,7 +144,7 @@ function Login() {
                                     <div >
                                         
                                         <h4 className="text-center">Login</h4>
-                                            <form  onSubmit={loginFn}>
+                                            <form  onSubmit={loginFn} className="text-center">
                                                 <div className="input-group m-1">
                                                     <input type="text" className="form-control" placeholder="User Id" id="userId" required />
                                                 </div>
@@ -157,19 +159,19 @@ function Login() {
                                                 
                                                 <div className="auth-error-msg text-danger text-center">{message}</div>
                                             </form>
-                                            <button><div className="signup-btn text-right text-info" onClick={()=>loginWithRedirect()}>Login Using Third part ? Click here</div>
+                                            <button className="signup-btn m-2 btn btn-primary text-right text-white" onClick={()=>loginWithRedirect()}>Login Using Third party ? Click here
                                                 </button>
                                     </div>
                                 ) : (
                                     <div>
-                                                                                <h4 className="text-center">Signup</h4>
+                                        <h4 className="text-center">Signup</h4>
                                         <form  onSubmit={signupFn}>
                                             <div>
                                                 <input type="text" className="form-control" placeholder="User Id" id="userId" required />
                                             </div>
                                             
                                             <div>
-                                                <input type="text" className="form-control" placeholder="Username" id="username" required />
+                                                <input type="text" className="form-control" placeholder="Username"  required />
                                             </div>
                                                 <input type="text" className="form-control" placeholder="Email" id="email" required/>
                                             <div className="input-group">

@@ -13,50 +13,35 @@ import Customer from "./pages/Customer";
 import Engineer from "./pages/Engineer";
 import Admin from "./pages/Admin";
 
+import RequireAuth from './components/RequireAuth';
+import Unauthorized from './components/Unauthorized';
+
+const ROLES = {
+  'CUSTOMER': 'CUSTOMER',
+  'ADMIN': 'ADMIN',
+  'ENGINEER': 'ENGINEER'
+}
+
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route
-            exact
-            path="/"
-            element={
-              <Suspense fallback={<div className="loader"></div>}>
-                  <Login />
-              </Suspense>
-            }
-        />
-        <Route
-            exact
-            path="/admin"
-            element={
-              <Suspense fallback={<div className="loader"></div>}>
-                <Admin />
-              </Suspense>
-            }
-        />
-        <Route
-            exact
-            path="/customer"
-            element={
-              <Suspense fallback={<div className="loader"></div>}>
-                <Customer />
-              </Suspense>
-            }
-        />
-        
-        <Route
-            exact
-            path="/engineer"
-            element={
-              <Suspense fallback={<div className="loader"></div>}>
-                <Engineer />
-              </Suspense>
-            }
-        />
-
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path="" element={<Login />} />
+          <Route path="unauthorized" element={<Unauthorized />} />
+          <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
+            <Route path="/admin" element={<Admin />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.CUSTOMER]} />}>
+            <Route path="/customer" element={<Customer />} />
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.ENGINEER]} />}>
+            <Route path="/engineer" element={<Engineer />} />
+          </Route>
+          
+          
+        </Routes>
+      </Router>
     
   );
 }
