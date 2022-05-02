@@ -15,6 +15,7 @@ import Admin from "./pages/Admin";
 
 import RequireAuth from './components/RequireAuth';
 import Unauthorized from './components/Unauthorized';
+import Notfound from './components/Notfound';
 
 const ROLES = {
   'CUSTOMER': 'CUSTOMER',
@@ -27,6 +28,7 @@ function App() {
   return (
       <Router>
         <Routes>
+          
           <Route path="" element={<Login />} />
           <Route path="unauthorized" element={<Unauthorized />} />
           <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
@@ -38,8 +40,7 @@ function App() {
           <Route element={<RequireAuth allowedRoles={[ROLES.ENGINEER]} />}>
             <Route path="/engineer" element={<Engineer />} />
           </Route>
-          
-          
+          <Route path="/*" element={<Notfound />} />
         </Routes>
       </Router>
     

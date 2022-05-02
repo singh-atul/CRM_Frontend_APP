@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/login.css';
@@ -12,11 +12,8 @@ function Login() {
     const { loginWithRedirect, user,isAuthenticated } = useAuth0();
     const [showSignup, setShowSignup] = useState(false);
     const [message, setMessage] = useState("");
-    const [userDetail, setUserDetail] = useState({});
     const [userType, setValue] = useState("CUSTOMER")
-
     const history = useNavigate();
-
     const loginFn = (e) => {
         const userId = document.getElementById("userId").value;
         const password = document.getElementById("password").value;
@@ -74,7 +71,8 @@ function Login() {
         axios.post(`${BASE_URL}/crm/api/v1/auth/signup`, data)
             .then(function (response) {
                 if (response.status === 201) {
-                   history("/");
+                //    history("/");
+                console.log(response)
                 }
             })
             .catch(function (error) {
@@ -88,7 +86,7 @@ function Login() {
     
 
     const toggleSignup = () => {
-        
+
         setShowSignup(!showSignup);
 
         

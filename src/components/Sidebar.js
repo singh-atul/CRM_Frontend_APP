@@ -6,9 +6,14 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Sidebar() {
-  const { logout } = useAuth0();
-  const history = useNavigate();
-
+  const {isAuthenticated, logout } = useAuth0();
+  const logoutFn=()=>{
+    localStorage.clear();
+    if(isAuthenticated)
+      logout()
+    else
+      window.location.href ="/"
+  }
   return (
     <CSidebar unfoldable className='vh-100 bg-black' >
       
@@ -26,7 +31,7 @@ function Sidebar() {
           <Link to={window.location} className='text-decoration-none text-white mx-3'>Home</Link>
         </CNavItem> */}
         
-        <div onClick={logout}>
+        <div onClick={logoutFn}>
         <CNavItem href="#">
           <i className="bi bi-box-arrow-left text-white m-2"></i>
           <div  className='text-decoration-none text-white mx-3'>Logout</div>

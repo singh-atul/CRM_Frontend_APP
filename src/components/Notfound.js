@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
-import not from '../assets/403.svg'
+import not from '../assets/404.svg'
 
 
-const Unauthorized = () => {
+const Notfound = () => {
     const navigate = useNavigate();
 
     const goBack = () => navigate(-1);
@@ -13,7 +13,7 @@ const Unauthorized = () => {
             <h1>Not Found</h1>
 <img src={not} />
             <br />
-            <p>You do not have access to the requested page.</p>
+            <p>Page is not available.</p>
             <div className="flexGrow">
                 <button className="btn btn-primary" onClick={goBack}>Go Back</button>
             </div>
@@ -23,4 +23,4 @@ const Unauthorized = () => {
     )
 }
 
-export default Unauthorized
+export default Notfound
