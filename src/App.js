@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -32,7 +32,7 @@ function App() {
           <Route path="" element={<Login />} />
           <Route path="unauthorized" element={<Unauthorized />} />
           <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin" exact element={<Admin />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={[ROLES.CUSTOMER]} />}>
             <Route path="/customer" element={<Customer />} />

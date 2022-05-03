@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import '../styles/login.css';
 import { useAuth0 } from "@auth0/auth0-react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import queryString from 'query-string'
-const BASE_URL=process.env.REACT_APP_SERVER_URL
-
+import {userSignin,userSignup,userAuthSignin} from '../api/auth.js'
 
 function Login() {
     const { loginWithRedirect, user,isAuthenticated } = useAuth0();
@@ -22,8 +20,7 @@ function Login() {
             password: password
         };
         e.preventDefault();
-        axios.post(`${BASE_URL}/crm/api/v1/auth/signin`, data)
-            .then(function (response) {
+        userSignin(data).then(function (response) {
                 
                 if (response.status === 200) {
                     if (response.data.message) {
@@ -67,9 +64,7 @@ function Login() {
             password: password.value
         };
         e.preventDefault();
-
-        axios.post(`${BASE_URL}/crm/api/v1/auth/signup`, data)
-            .then(function (response) {
+        userSignup(data).then(function (response) {
                 if (response.status === 201) {
                 //    history("/");
                 console.log(response)
@@ -100,7 +95,7 @@ function Login() {
         if(isAuthenticated){
             const {code} = queryString.parse(window.location.search)
             user.code = code
-            axios.post(`${BASE_URL}/crm/api/v1/auth/oauthsignin`, user).then(function (response) {
+            userAuthSignin(user).then(function (response) {
             if (response.status === 200) {
                 if (response.data.message) {
                     setMessage(response.data.message)
@@ -164,21 +159,23 @@ function Login() {
                                     <div>
                                         <h4 className="text-center">Signup</h4>
                                         <form  onSubmit={signupFn}>
-                                            <div>
+                                            <div className="input-group m-1">
                                                 <input type="text" className="form-control" placeholder="User Id" id="userId" required />
                                             </div>
                                             
-                                            <div>
+                                            <div className="input-group m-1">
                                                 <input type="text" className="form-control" placeholder="Username"  required />
                                             </div>
-                                                <input type="text" className="form-control" placeholder="Email" id="email" required/>
-                                            <div className="input-group">
+                                            <div className="input-group m-1">
+                                                <input type="text" className="form-control" placeholder="Email" id="email"  required/>
+                                            </div>
+                                            <div className="input-group m-1">
                                                 <input type="password" className="form-control" placeholder="Password" id="password" required />
                                             </div>
 
 
                                             <div className="input-group m-1">
-                                            <span className="text-muted my-2 mx-2"> User Type</span>
+                                            <span className="text-muted m-1"> User Type</span>
                                                 <DropdownButton
                                                     align="end"
                                                     title={userType}

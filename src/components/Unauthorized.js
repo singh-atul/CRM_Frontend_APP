@@ -11,7 +11,7 @@ const Unauthorized = () => {
         <section className="bg-light vh-100 d-flex justify-content-center align-items-center text-center">
          <div>
             <h1>Not Found</h1>
-<img src={not} />
+<img src={not} alt=""/>
             <br />
             <p>You do not have access to the requested page.</p>
             <div className="flexGrow">

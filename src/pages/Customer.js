@@ -4,11 +4,8 @@ import { ExportCsv, ExportPdf } from '@material-table/exporters';
 import { Modal, Button } from 'react-bootstrap'
 import Sidebar from '../components/Sidebar'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import axios from 'axios';
 import '../styles/admin.css';
-
-const BASE_URL =process.env.REACT_APP_SERVER_URL
-
+import {fetchTicket,ticketCreation,ticketUpdation} from '../api/tickets.js'
 
 
 function User() {
@@ -28,8 +25,9 @@ function User() {
 
         useEffect(() => {
           (async () => {
-              fetchTickets()
+              fetchTickets();
           })();
+          // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);
 
         const updateTicketCounts = (tickets) =>{
@@ -40,36 +38,33 @@ function User() {
                 blocked:0
 
             }
-            tickets.map(x=>{
-                if(x.status=="OPEN")
+            tickets.forEach(x=>{
+                if(x.status==="OPEN")
                     data.pending+=1
-                else if(x.status=="IN_PROGRESS")
+                else if(x.status==="IN_PROGRESS")
                     data.progress+=1
-                else if(x.status=="BLOCKED")
+                else if(x.status==="BLOCKED")
                     data.blocked+=1
                 else
                     data.closed+=1
-            })
+                
+            });
             setTicketStatusCount(Object.assign({}, data))
         }
         const fetchTickets = () => {
-          axios.get(`${BASE_URL}/crm/api/v1/tickets/`,
-              {
-                  headers: {
-                  'x-access-token': localStorage.getItem("token")
-              }
-            },{
-                  "userId":localStorage.getItem("userId")
-              }
-          ).then(function (response) {
-              console.log("######")
+              fetchTicket().then(function (response) {
               if (response.status === 200) {
                     setTicketDetails(response.data);
                     updateTicketCounts(response.data)
               }
           })
               .catch(function (error) {
-                  console.log(error);
+                if(error.response.status === 401){
+                    localStorage.clear();
+                    window.location.href ="/"
+                  }
+
+
               });
         }
 
@@ -80,11 +75,7 @@ function User() {
              title:e.target.title.value,
              description:e.target.description.value
         }
-        axios.post(`${BASE_URL}/crm/api/v1/tickets/`,data,{
-            headers: {
-                'x-access-token': localStorage.getItem("token")
-            }
-        }).then(function (response){
+        ticketCreation(data).then(function (response){
             setMessage("Ticket Created Successfully");
             closeTicketCreationModal();
             fetchTickets();
@@ -100,14 +91,7 @@ function User() {
 
       const updateTicket = (e) =>{
         e.preventDefault()
-        axios.put(`${BASE_URL}/crm/api/v1/tickets/${selectedCurrTicket.id,selectedCurrTicket}`, {
-            headers: {
-                'x-access-token': localStorage.getItem("token")
-            }
-        },{
-            "userId":localStorage.getItem("userId")
-        }).
-        then(function (response){
+        ticketUpdation(selectedCurrTicket.id,selectedCurrTicket).then(function (response){
             setMessage("Ticket Updated Successfully");
             closeTicketUpdationModal();
             fetchTickets();
@@ -118,6 +102,7 @@ function User() {
             else if(error.status === 401)
                 setMessage("Authorization error, retry loging in");
                 closeTicketUpdationModal();
+                
             console.log(error.message);
         })
 
@@ -138,7 +123,7 @@ function User() {
       }
 
       const onTicketUpdate = (e)=>{
-        if(e.target.name=="title")
+        if(e.target.name==="title")
             selectedCurrTicket.title = e.target.value
         else if(e.target.name==="description")
             selectedCurrTicket.description = e.target.value
@@ -165,7 +150,7 @@ function User() {
                         <div className="col-xs-12 col-lg-3 col-md-6 my-1">
                             <div className="card  cardItem shadow  bg-primary text-dark bg-opacity-25 borders-b" style={{ width: 15 + 'rem' }}>
                                 <div className="card-body">
-                                    <h5 className="card-subtitle mb-2"><i class="bi bi-pencil text-primary mx-2"></i>Open </h5>
+                                    <h5 className="card-subtitle mb-2"><i className="bi bi-pencil text-primary mx-2"></i>Open </h5>
                                     <hr />
                                     <div className="row">
                                         <div className="col">  
@@ -187,7 +172,7 @@ function User() {
                       <div className="col-xs-12 col-lg-3 col-md-6 my-1">
                             <div className="card shadow  bg-warning text-dark bg-opacity-25 borders-y" style={{ width: 15 + 'rem' }}>
                                 <div className="card-body">
-                                    <h5 className="card-subtitle mb-2"><i class="bi bi-lightning-charge text-warning mx-2"></i>Progress </h5>
+                                    <h5 className="card-subtitle mb-2"><i className="bi bi-lightning-charge text-warning mx-2"></i>Progress </h5>
                                     <hr />
                                     <div className="row">
                                         <div className="col">  <h1 className="col text-dark mx-4">{ticketStatusCount.progress} </h1> </div>
@@ -207,7 +192,7 @@ function User() {
                       <div className="col-xs-12 col-lg-3 col-md-6 my-1">
                                 <div className="card shadow  bg-success text-dark bg-opacity-25 borders-g" style={{ width: 15 + 'rem' }}>
                                     <div className="card-body">
-                                        <h5 className="card-subtitle mb-2"><i class="bi bi-check2-circle text-success mx-2"></i>Closed </h5>
+                                        <h5 className="card-subtitle mb-2"><i className="bi bi-check2-circle text-success mx-2"></i>Closed </h5>
                                         <hr />
                                         <div className="row">
                                             <div className="col">  <h1 className="col text-dark mx-4">{ticketStatusCount.closed}</h1> </div>
@@ -227,7 +212,7 @@ function User() {
                             <div className="col-xs-12 col-lg-3 col-md-6 my-1">
                                 <div className="card shadow  bg-secondary text-dark bg-opacity-25 borders-grey" style={{ width: 15 + 'rem' }}>
                                     <div className="card-body">
-                                        <h5 className="card-subtitle mb-2"><i class="bi bi-slash-circle text-secondary mx-2"></i>Blocked </h5>
+                                        <h5 className="card-subtitle mb-2"><i className="bi bi-slash-circle text-secondary mx-2"></i>Blocked </h5>
                                         <hr />
                                         <div className="row">
                                             <div className="col">  <h1 className="col text-dark mx-4">{ticketStatusCount.blocked}</h1> </div>
@@ -248,7 +233,7 @@ function User() {
 
                  <hr />
 
-                 <p class="text-success">{message}</p>
+                 <p className="text-success">{message}</p>
                   {/* <MuiThemeProvider theme={theme}> */}
                   <MaterialTable
                       onRowClick={(event,rowData) => editTicket(rowData)}
@@ -298,10 +283,10 @@ function User() {
                           sorting: true,
                           exportMenu: [{
                               label: 'Export PDF',
-                              exportFunc: (cols, datas) => ExportPdf(cols, datas, 'userRecords')
+                              exportFunc: (cols, datas) => ExportPdf(cols, datas, 'TicketRecords')
                           }, {
                               label: 'Export CSV',
-                              exportFunc: (cols, datas) => ExportCsv(cols, datas, 'userRecords')
+                              exportFunc: (cols, datas) => ExportCsv(cols, datas, 'TicketRecords')
                           }],
                           headerStyle: {
                             backgroundColor: 'darkblue',
@@ -330,12 +315,12 @@ function User() {
                           <Modal.Body>
                             <form onSubmit={createTicket} >
                                 <div className="p-1">
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon2">Title</span>
+                                    <div className="input-group mb-3">
+                                        <span className="input-group-text" id="basic-addon2">Title</span>
                                         <input type="text" className="form-control" name="title"  required/>
                                     </div>
-                                    <div class="md-form amber-textarea active-amber-textarea-2">
-                                        <textarea id="form16" class="md-textarea form-control" rows="3" name="description" placeholder="Description" required></textarea>
+                                    <div className="md-form amber-textarea active-amber-textarea-2">
+                                        <textarea id="form16" className="md-textarea form-control" rows="3" name="description" placeholder="Description" required></textarea>
                                     </div>
                                 </div>
                                 
@@ -371,24 +356,24 @@ function User() {
                                 <div className="p-1">
                                       <h5 className="card-subtitle mb-2 text-primary lead">Ticket ID: {selectedCurrTicket.id}</h5>
                                       <hr />
-                                      <div class="input-group mb-3">
-                                          <span class="input-group-text" id="basic-addon2">Title</span>
+                                      <div className="input-group mb-3">
+                                          <span className="input-group-text" id="basic-addon2">Title</span>
                                           <input type="text" className="form-control" name="title" value={selectedCurrTicket.title} onChange={onTicketUpdate} required/>
   
                                       </div>
-                                      <div class="input-group mb-3">
-                                          <span class="input-group-text" id="basic-addon2">Assignee</span>
+                                      <div className="input-group mb-3">
+                                          <span className="input-group-text" id="basic-addon2">Assignee</span>
                                           <input type="text" className="form-control"  value={selectedCurrTicket.assignee} disabled />
                                       </div>
-                                      <div class="input-group mb-3">
-                                          <span class="input-group-text" id="basic-addon2">Status</span>
+                                      <div className="input-group mb-3">
+                                          <span className="input-group-text" id="basic-addon2">Status</span>
                                           <select className="form-select" name="status" value={selectedCurrTicket.status} onChange={onTicketUpdate}>
                                               <option value="OPEN">OPEN</option>
                                               <option value="CLOSED">CLOSED</option>
                                           </select>
                                                                                 </div>
-                                      <div class="md-form amber-textarea active-amber-textarea-2">
-                                        <textarea id="form16" class="md-textarea form-control" rows="3" name="description" placeholder="Description" value={selectedCurrTicket.description}  onChange={onTicketUpdate} required></textarea>
+                                      <div className="md-form amber-textarea active-amber-textarea-2">
+                                        <textarea id="form16" className="md-textarea form-control" rows="3" name="description" placeholder="Description" value={selectedCurrTicket.description}  onChange={onTicketUpdate} required></textarea>
                                       </div>
                                   </div>
                                 

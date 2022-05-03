@@ -1,8 +1,6 @@
 import { CSidebar, CSidebarNav, CNavTitle, CNavItem } from '@coreui/react';
 import '../styles/sidebar.css'
-import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useNavigate } from 'react-router-dom';
 
 
 function Sidebar() {
