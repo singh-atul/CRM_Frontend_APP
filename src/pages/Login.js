@@ -11,6 +11,7 @@ function Login() {
     const [showSignup, setShowSignup] = useState(false);
     const [message, setMessage] = useState("");
     const [userType, setValue] = useState("CUSTOMER")
+    const [userSignUpData,setUserSignUpData] = useState({})
     const history = useNavigate();
     const loginFn = (e) => {
         const userId = document.getElementById("userId").value;
@@ -43,10 +44,7 @@ function Login() {
                 }
             })
             .catch(function (error) {
-                if(error.response.status===400 || error.response.status===401)
-                    setMessage(error.response.data.message);
-                else
-                    console.log(error);
+                console.log(error);
             });
     }
 
@@ -66,8 +64,7 @@ function Login() {
         e.preventDefault();
         userSignup(data).then(function (response) {
                 if (response.status === 201) {
-                //    history("/");
-                console.log(response)
+                   history(0);
                 }
             })
             .catch(function (error) {
@@ -78,13 +75,16 @@ function Login() {
             });
     }
 
-    
+    const  updateSignupData =(e)=>{
+        userSignUpData[e.target.id]=e.target.value;
+    }
 
     const toggleSignup = () => {
 
         setShowSignup(!showSignup);
-
-        
+        if(showSignup){
+            setUserSignUpData({});
+    }
     }
 
     const handleSelect = (e) => {
@@ -127,17 +127,19 @@ function Login() {
     }
     return (
         
-        !checkAuth() && (<div id="loginPage">      
+        !checkAuth() && ( <div id="loginPage">
             <div id="loginPage" className="bg-primary d-flex justify-content-center align-items-center vh-100">
+
                 <div className="card m-5 p-5" >
                     <div className="row m-2">
                         <div className="col">
+
                             {
                                 !showSignup ? (
+                                    
                                     <div >
-                                        
                                         <h4 className="text-center">Login</h4>
-                                            <form  onSubmit={loginFn} className="text-center">
+                                            <form  onSubmit={loginFn}>
                                                 <div className="input-group m-1">
                                                     <input type="text" className="form-control" placeholder="User Id" id="userId" required />
                                                 </div>
@@ -149,7 +151,6 @@ function Login() {
                                                     <input type="submit"  className="form-control btn btn-primary" value="Log in" />
                                                 </div>
                                                 <div className="signup-btn text-right text-info" onClick={toggleSignup}>Dont have an Account ? Signup</div>
-                                                
                                                 <div className="auth-error-msg text-danger text-center">{message}</div>
                                             </form>
                                             <button className="signup-btn m-2 btn btn-primary text-right text-white" onClick={()=>loginWithRedirect()}>Login Using Third party ? Click here
@@ -159,23 +160,21 @@ function Login() {
                                     <div>
                                         <h4 className="text-center">Signup</h4>
                                         <form  onSubmit={signupFn}>
-                                            <div className="input-group m-1">
-                                                <input type="text" className="form-control" placeholder="User Id" id="userId" required />
+                                            <div>
+                                                <input type="text" className="form-control" placeholder="User Id" id="userId" onChange={updateSignupData} required />
                                             </div>
                                             
-                                            <div className="input-group m-1">
-                                                <input type="text" className="form-control" placeholder="Username"  required />
+                                            <div>
+                                                <input type="text" className="form-control" placeholder="Username" id="username" onChange={updateSignupData} required />
                                             </div>
-                                            <div className="input-group m-1">
-                                                <input type="text" className="form-control" placeholder="Email" id="email"  required/>
-                                            </div>
-                                            <div className="input-group m-1">
-                                                <input type="password" className="form-control" placeholder="Password" id="password" required />
+                                                <input type="text" className="form-control" placeholder="Email" id="email" onChange={updateSignupData} required/>
+                                            <div className="input-group">
+                                                <input type="password" className="form-control" placeholder="Password" id="password" onChange={updateSignupData} required />
                                             </div>
 
 
                                             <div className="input-group m-1">
-                                            <span className="text-muted m-1"> User Type</span>
+                                            <span className="text-muted my-2 mx-2"> User Type</span>
                                                 <DropdownButton
                                                     align="end"
                                                     title={userType}
@@ -207,7 +206,7 @@ function Login() {
             </div>
 
         </div>
-    )
+        )   
     )
 }
 
