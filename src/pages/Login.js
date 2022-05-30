@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -12,6 +12,22 @@ function Login() {
     const [message, setMessage] = useState("");
     const [userType, setValue] = useState("CUSTOMER")
     const [userSignUpData,setUserSignUpData] = useState({})
+
+    useEffect(() => {
+            if(localStorage.getItem("token")){
+                if ( localStorage.getItem("userTypes")=== "CUSTOMER")
+                    history('/customer');
+                else if ((localStorage.getItem("userTypes") === "ENGINEER"))
+                    history('/engineer'); 
+                else
+                    history('/admin');          
+                }
+        
+            
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+
+
     const history = useNavigate();
     const loginFn = (e) => {
         const userId = document.getElementById("userId").value;
@@ -49,18 +65,20 @@ function Login() {
     }
 
     const signupFn = (e) => {
-        const username = document.getElementById("username");
-        const userId = document.getElementById("userId");
-        const email = document.getElementById("email");
-        const password = document.getElementById("password");
+        const username =  userSignUpData.username;
+        const userId = userSignUpData.userId;
+        const email = userSignUpData.email;
+        const password = userSignUpData.password
+
 
         const data = {
-            name: username.value,
-            userId: userId.value,
-            email: email.value,
+            name: username,
+            userId: userId,
+            email: email,
             userType: userType,
-            password: password.value
+            password: password
         };
+        console.log('data',data)
         e.preventDefault();
         userSignup(data).then(function (response) {
                 if (response.status === 201) {
@@ -77,6 +95,7 @@ function Login() {
 
     const  updateSignupData =(e)=>{
         userSignUpData[e.target.id]=e.target.value;
+        console.log(userSignUpData);
     }
 
     const toggleSignup = () => {
