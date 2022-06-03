@@ -10,7 +10,7 @@ const Unauthorized = () => {
     return (
         <section className="bg-light vh-100 d-flex justify-content-center align-items-center text-center">
          <div>
-            <h1>Not Found</h1>
+            <h1>Unauthorized Access</h1>
 <img src={not} alt=""/>
             <br />
             <p>You do not have access to the requested page.</p>

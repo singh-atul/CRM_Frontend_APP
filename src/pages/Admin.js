@@ -7,7 +7,6 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import '../styles/admin.css';
 import {fetchTicket,ticketUpdation} from '../api/tickets.js'
 import {getAllUser,updateUserData} from '../api/user.js'
-
 function Admin() {    
         const [userList, setUserList] = useState([]);
         const [userDetail, setUserDetail] = useState({});
@@ -17,10 +16,7 @@ function Admin() {
         const [ticketStatusCount, setTicketStatusCount] = useState({});
 
         const updateSelectedCurrTicket = (data) => setSelectedCurrTicket(data)
-
         const closeTicketUpdationModal = () => setTicketUpdateModal(false)
-
-
         const [userModal, setUserModal] = useState(false);
         const [message, setMessage] = useState("");
         const currUserName = useState(localStorage.getItem("name"));

@@ -81,6 +81,7 @@ function User() {
             fetchTickets();
 
         }).catch(function (error){
+            console.log(error);
             if (error.status === 400)
                     setMessage(error.message);
             else
