@@ -81,7 +81,6 @@ function User() {
             fetchTickets();
 
         }).catch(function (error){
-            console.log(error);
             if (error.status === 400)
                     setMessage(error.message);
             else
@@ -311,22 +310,26 @@ function User() {
                           centered
                       >
                           <Modal.Header closeButton>
-                              <Modal.Title >CREATE TICKETS</Modal.Title>
+                              <Modal.Title >CREATE TICKET</Modal.Title>
                           </Modal.Header>
                           <Modal.Body>
                             <form onSubmit={createTicket} >
                                 <div className="p-1">
-                                    <div className="input-group mb-3">
-                                        <span className="input-group-text" id="basic-addon2">Title</span>
-                                        <input type="text" className="form-control" name="title"  required/>
+                                    <div className="input-group">
+                                        <input type="text" className="form-control" name="title" placeholder="Title" required/>
                                     </div>
-                                    <div className="md-form amber-textarea active-amber-textarea-2">
+                                    <div >
                                         <textarea id="form16" className="md-textarea form-control" rows="3" name="description" placeholder="Description" required></textarea>
                                     </div>
                                 </div>
-                                
-                                <Button variant="secondary" onClick={() => closeTicketCreationModal()}>Cancel</Button>
-                                <Button type="submit" variant="primary" >Create</Button>
+                                <div className="input-group justify-content-center">
+                                    <div className="m-1">
+                                        <Button variant="secondary"  onClick={() => closeTicketCreationModal()} >Cancel</Button>
+                                    </div>
+                                    <div className="m-1">
+                                        <Button type="submit" variant="primary" >Create</Button>
+                                    </div>
+                                </div>
                             </form>
                           </Modal.Body>
                           <Modal.Footer>
@@ -357,29 +360,37 @@ function User() {
                                 <div className="p-1">
                                       <h5 className="card-subtitle mb-2 text-primary lead">Ticket ID: {selectedCurrTicket.id}</h5>
                                       <hr />
-                                      <div className="input-group mb-3">
-                                          <span className="input-group-text" id="basic-addon2">Title</span>
-                                          <input type="text" className="form-control" name="title" value={selectedCurrTicket.title} onChange={onTicketUpdate} required/>
-  
-                                      </div>
-                                      <div className="input-group mb-3">
-                                          <span className="input-group-text" id="basic-addon2">Assignee</span>
-                                          <input type="text" className="form-control"  value={selectedCurrTicket.assignee} disabled />
-                                      </div>
-                                      <div className="input-group mb-3">
-                                          <span className="input-group-text" id="basic-addon2">Status</span>
-                                          <select className="form-select" name="status" value={selectedCurrTicket.status} onChange={onTicketUpdate}>
-                                              <option value="OPEN">OPEN</option>
-                                              <option value="CLOSED">CLOSED</option>
-                                          </select>
-                                                                                </div>
-                                      <div className="md-form amber-textarea active-amber-textarea-2">
-                                        <textarea id="form16" className="md-textarea form-control" rows="3" name="description" placeholder="Description" value={selectedCurrTicket.description}  onChange={onTicketUpdate} required></textarea>
+                                      <div className="input-group justify-content-center">
+                                        <div className="input-group mb-2 ">
+                                            <span className="input-group-text" id="basic-addon2">Title</span>
+                                            <input type="text" className="form-control" name="title" value={selectedCurrTicket.title} onChange={onTicketUpdate} required/>
+    
+                                        </div>
+                                        <div className="input-group mb-2">
+                                            <span className="input-group-text" id="basic-addon2">Assignee</span>
+                                            <input type="text" className="form-control"  value={selectedCurrTicket.assignee} disabled />
+                                        </div>
+                                        <div className="input-group mb-2">
+                                            <span className="input-group-text" id="basic-addon2">Status</span>
+                                            <select className="form-select" name="status" value={selectedCurrTicket.status} onChange={onTicketUpdate}>
+                                                <option value="OPEN">OPEN</option>
+                                                <option value="CLOSED">CLOSED</option>
+                                            </select>
+                                            </div>
+                                       
+                                        <textarea id="form16" className="form-control mx-3" rows="3"  name="description" placeholder="Description" value={selectedCurrTicket.description}  onChange={onTicketUpdate} required></textarea>
                                       </div>
                                   </div>
+                                <div className="input-group justify-content-center">
+                                    <div className="m-1">
+                                        <Button variant="secondary" onClick={() => closeTicketUpdationModal()}>Cancel</Button>
+                                    </div>
+                                    <div className="m-1">
+                                        <Button type="submit" variant="primary" >Update</Button>
+                                    </div>
+                                </div>
                                 
-                                <Button variant="secondary" onClick={() => closeTicketUpdationModal()}>Cancel</Button>
-                                <Button type="submit" variant="primary" >Update</Button>
+                                
                             </form>
                           </Modal.Body>
                           <Modal.Footer>

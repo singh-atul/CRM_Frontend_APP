@@ -30,8 +30,13 @@ function Login() {
 
     const history = useNavigate();
     const loginFn = (e) => {
-        const userId = document.getElementById("userId").value;
-        const password = document.getElementById("password").value;
+        // const userId = document.getElementById("userId").value;
+        // const password = document.getElementById("password").value;
+
+        const userId = userSignUpData.userId;
+        const password = userSignUpData.password
+
+
         const data = {
             userId: userId,
             password: password
@@ -162,39 +167,25 @@ function Login() {
                                     <div >
                                         <h4 className="text-center">Login</h4>
                                             <form  onSubmit={loginFn}>
-                                                <div className="input-group m-1">
-                                                    <input type="text" className="form-control" placeholder="User Id" id="userId" required />
-                                                </div>
-                                                <div className="input-group m-1">
-                                                    <input type="password" className="form-control" placeholder="Password"  id="password" required/>
-                                                </div>
-
-                                                <div className="input-group m-1">
-                                                    <input type="submit"  className="form-control btn btn-primary" value="Log in" />
-                                                </div>
+                                                <input type="text" className="form-control" placeholder="User Id" id="userId" onChange={updateSignupData} required />
+                                                <input type="password" className="form-control" placeholder="Password"  id="password" onChange={updateSignupData} required/>
+                                                <input type="submit"  className="form-control btn btn-primary" value="Log in" />
+                                            
                                                 <div className="signup-btn text-right text-info" onClick={toggleSignup}>Dont have an Account ? Signup</div>
                                                 <div className="auth-error-msg text-danger text-center">{message}</div>
                                             </form>
-                                            <button className="signup-btn m-2 btn btn-primary text-right text-white" onClick={()=>loginWithRedirect()}>Login Using Third party ? Click here
-                                                </button>
+                                            {/* <button className="signup-btn m-2 btn btn-primary text-right text-white" onClick={()=>loginWithRedirect()}>Login Using Third party ? Click here
+                                                </button> */}
                                     </div>
                                 ) : (
                                     <div>
                                         <h4 className="text-center">Signup</h4>
                                         <form  onSubmit={signupFn}>
-                                            <div>
                                                 <input type="text" className="form-control" placeholder="User Id" id="userId" onChange={updateSignupData} required />
-                                            </div>
                                             
-                                            <div>
                                                 <input type="text" className="form-control" placeholder="Username" id="username" onChange={updateSignupData} required />
-                                            </div>
                                                 <input type="text" className="form-control" placeholder="Email" id="email" onChange={updateSignupData} required/>
-                                            <div className="input-group">
                                                 <input type="password" className="form-control" placeholder="Password" id="password" onChange={updateSignupData} required />
-                                            </div>
-
-
                                             <div className="input-group m-1">
                                             <span className="text-muted my-2 mx-2"> User Type</span>
                                                 <DropdownButton
@@ -209,11 +200,7 @@ function Login() {
                                                     <Dropdown.Item eventKey="ENGINEER">ENGINEER</Dropdown.Item>
                                                 </DropdownButton>
                                             </div>
-                                        
-
-                                            <div className="input-group m-1">
-                                                <input type="submit" className="form-control btn btn-primary m-1" value="Sign up"  />
-                                            </div>
+                                            <input type="submit" className="form-control btn btn-primary m-1" value="Sign up"  />
                                             <div className="signup-btn text-center text-info"  onClick={toggleSignup}>Already have an Account ? Login</div>
                                             <div className="auth-error-msg text-danger text-center">{message}</div>
                                         </form>

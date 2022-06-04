@@ -324,9 +324,17 @@ return (
                                   <textarea id="form16" className="md-textarea form-control" rows="3" name="description" placeholder="Description" value={selectedCurrTicket.description}  onChange={onTicketUpdate} required></textarea>
                                 </div>
                             </div>
+                            <div className="input-group justify-content-center">
+                                    <div className="m-1">
+                                    <Button variant="secondary" onClick={() => closeTicketUpdationModal()}>Cancel</Button>
+                                    </div>
+                                    <div className="m-1">
+                                    <Button type="submit" variant="primary" >Update</Button>
+                                    </div>
+                                </div>
+
+                         
                           
-                          <Button variant="secondary" onClick={() => closeTicketUpdationModal()}>Cancel</Button>
-                          <Button type="submit" variant="primary" >Update</Button>
                       </form>
                     </Modal.Body>
                     <Modal.Footer>

@@ -451,14 +451,19 @@ function Admin() {
                                       </div>
   
                                   </div>
-  
+                                  <div className="input-group justify-content-center">
+                                    <div className="m-1">
+                                    <Button variant="secondary" onClick={() => closeUserModal()}>
+                                  Close
+                              </Button>
+                                    </div>
+                                    <div className="m-1">
+                                    <Button variant="primary" onClick={() => updateUserDetail()}>Update</Button>
+                                    </div>
+                                </div>
                               </form>
                           </Modal.Body>
                           <Modal.Footer>
-                              <Button variant="secondary" onClick={() => closeUserModal()}>
-                                  Close
-                              </Button>
-                              <Button variant="primary" onClick={() => updateUserDetail()}>Update</Button>
                           </Modal.Footer>
                       </Modal>
   
@@ -522,9 +527,19 @@ function Admin() {
   
                                       </div>
                                   </div>
-                                
-                                <Button variant="secondary" onClick={() => closeTicketUpdationModal()}>Cancel</Button>
-                                <Button type="submit" variant="primary" >Update</Button>
+
+                                  <div className="input-group justify-content-center">
+                                    <div className="m-1">
+                                        <Button variant="primary" onClick={() => updateUserDetail()}>Update</Button>
+                                    </div>
+                                    <div className="m-1">
+                                        <Button variant="secondary" onClick={() => closeTicketUpdationModal()}>Cancel</Button>
+                                    </div>
+                                    <div className="m-1">
+                                        <Button type="submit" variant="primary" >Update</Button>
+                                    </div>
+                                </div>
+                               
                             </form>
                           </Modal.Body>
                           <Modal.Footer>
