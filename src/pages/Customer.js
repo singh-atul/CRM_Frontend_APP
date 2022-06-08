@@ -5,7 +5,7 @@ import { Modal, Button } from 'react-bootstrap'
 import Sidebar from '../components/Sidebar'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import '../styles/customer.css';
-
+import '../styles/common.css';
 import {fetchTicket,ticketCreation,ticketUpdation} from '../api/tickets.js'
 
 
