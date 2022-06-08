@@ -5,6 +5,7 @@ import { Modal, Button } from 'react-bootstrap'
 import Sidebar from '../components/Sidebar'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import '../styles/admin.css';
+import '../styles/common.css';
 
 import {fetchTicket,ticketUpdation} from '../api/tickets.js'
 import {getAllUser,updateUserData} from '../api/user.js'
