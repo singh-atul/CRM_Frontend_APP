@@ -5,6 +5,7 @@ import { Modal, Button } from 'react-bootstrap'
 import Sidebar from '../components/Sidebar'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import '../styles/admin.css';
+
 import {fetchTicket,ticketUpdation} from '../api/tickets.js'
 import {getAllUser,updateUserData} from '../api/user.js'
 function Admin() {    
@@ -19,7 +20,6 @@ function Admin() {
         const closeTicketUpdationModal = () => setTicketUpdateModal(false)
         const [userModal, setUserModal] = useState(false);
         const [message, setMessage] = useState("");
-        const currUserName = useState(localStorage.getItem("name"));
         const showUserModal = () => setUserModal(true);
         const closeUserModal = () => {
             setUserModal(false);
@@ -176,11 +176,11 @@ function Admin() {
 
       return (
 
-          <div className="bg-light">
+          <div className="bg-light min-vh-100">
             <div className="col-1"><Sidebar home='/' /></div>
 
-              <div className="container vh-100%">
-                  <h3 className="text-primary text-center">Welcome, {currUserName}</h3>
+              <div className="container">
+                  <h3 className="text-primary text-center">Welcome, {localStorage.getItem("name")}</h3>
                   <p className="text-muted text-center">Take a quick looks at your admin stats below. </p>
   
                   {/* card */}
@@ -419,18 +419,18 @@ function Admin() {
                                       <h5 className="card-subtitle mb-2 text-primary lead">User ID: {userDetail.userId}</h5>
                                       <hr />
                                       <div className="input-group mb-3">
-                                          <span className="input-group-text" id="basic-addon2">Name</span>
+                                      <label className="label input-group-text label-md ">Name</label>
                                           <input type="text" className="form-control" name="name" value={userDetail.name} onChange={changeUserDetail} />
   
                                       </div>
                                       <div className="input-group mb-3">
-                                          <span className="input-group-text" id="basic-addon2">Email</span>
+                                      <label className="label input-group-text label-md ">Email</label>
                                           <input type="text" className="form-control" name="name" value={userDetail.email} onChange={changeUserDetail} disabled />
   
                                       </div>
   
                                       <div className="input-group mb-3">
-                                          <span className="input-group-text" id="basic-addon2">Type</span>
+                                      <label className="label input-group-text label-md ">Type</label>
                                           <select className="form-select" name="type" value={userDetail.userTypes} onChange={changeUserDetail}>
                                               <option value="ADMIN">ADMIN</option>
                                               <option value="CUSTOMER">CUSTOMER</option>
@@ -440,7 +440,7 @@ function Admin() {
                                       </div>
   
                                       <div className="input-group mb-3">
-                                          <span className="input-group-text" id="basic-addon2">Status</span>
+                                      <label className="label input-group-text label-md ">Status</label>
                                           <select name="status" className="form-select"
                                               value={userDetail.userStatus} onChange={changeUserDetail}>
                                               <option value="APPROVED">APPROVED</option>
@@ -489,49 +489,52 @@ function Admin() {
                                 <div className="p-1">
                                       <h5 className="card-subtitle mb-2 text-primary lead">Ticket ID: {selectedCurrTicket.id}</h5>
                                       <hr />
-                                      <div className="input-group mb-3">
-                                          <span className="input-group-text" id="basic-addon2">Title</span>
-                                          <input type="text" className="form-control" name="title" value={selectedCurrTicket.title} onChange={onTicketUpdate} required/>
-  
-                                      </div>
                                       
                                       <div className="input-group mb-3">
-                                          <span className="input-group-text" id="basic-addon2">Assignee</span>
-                                      <select className="form-select" name="assignee" value={selectedCurrTicket.assignee} onChange={onTicketUpdate}>
-                                                {
-                                                    userList.filter((user)=>{
-                                                        return user.userTypes==="ENGINEER"
-                                                    }).map((user) => 
-                                                    <option value={user.name}>{user.name}</option>
-                                                    )
-                                                }
-                                        </select>
-                                    </div>
+                                      <label className="label input-group-text label-md ">Title</label>
+                                          <input type="text" className="form-control" name="title" value={selectedCurrTicket.title} onChange={onTicketUpdate} required/>
+                                      </div>
 
                                       <div className="input-group mb-3">
-                                          <span className="input-group-text" id="basic-addon2">Status</span>
+                                      <label className="label input-group-text label-md ">PRIORITY</label>
+                                          <input type="text" className="form-control" name="ticketPriority" value={selectedCurrTicket.ticketPriority} onChange={onTicketUpdate} required/>
+  
+                                      </div>
+
+                                      
+                                      <div className="input-group mb-3">
+                                      <label className="label input-group-text label-md ">Assignee</label>
+                                            <select className="form-select" name="assignee" value={selectedCurrTicket.assignee} onChange={onTicketUpdate}>
+                                                        {
+                                                            
+                                                            userList.map((e,key) => {
+                                                                if(e.userTypes==="ENGINEER")
+                                                                    return <option key={key} value={e.value}>{e.name}</option>;
+                                                                else
+                                                                    return undefined
+                                                            })
+                                                            
+                                                        }
+                                            </select>
+                                    </div>
+
+                                    <div className="input-group mb-3">
+                                    <label className="label input-group-text label-md ">Status</label>
                                           <select className="form-select" name="status" value={selectedCurrTicket.status} onChange={onTicketUpdate}>
-                                          <option value="OPEN">OPEN</option>
-                                        <option value="IN_PROGRESS">IN_PROGRESS</option>
-                                        <option value="BLOCKED">BLOCKED</option>
-                                        <option value="CLOSED">CLOSED</option>
+                                            <option value="OPEN">OPEN</option>
+                                            <option value="IN_PROGRESS">IN_PROGRESS</option>
+                                            <option value="BLOCKED">BLOCKED</option>
+                                            <option value="CLOSED">CLOSED</option>
                                           </select>
-                                                                                </div>
+                                    </div>
                                       <div className="md-form amber-textarea active-amber-textarea-2">
                                         <textarea id="form16" className="md-textarea form-control" rows="3" name="description" placeholder="Description" value={selectedCurrTicket.description}  onChange={onTicketUpdate} required></textarea>
                                       </div>
 
-                                      <div className="input-group mb-3">
-                                          <span className="input-group-text" id="basic-addon2">PRIORITY</span>
-                                          <input type="text" className="form-control" name="ticketPriority" value={selectedCurrTicket.ticketPriority} onChange={onTicketUpdate} required/>
-  
-                                      </div>
+                                      
                                   </div>
 
                                   <div className="input-group justify-content-center">
-                                    <div className="m-1">
-                                        <Button variant="primary" onClick={() => updateUserDetail()}>Update</Button>
-                                    </div>
                                     <div className="m-1">
                                         <Button variant="secondary" onClick={() => closeTicketUpdationModal()}>Cancel</Button>
                                     </div>
@@ -554,7 +557,12 @@ function Admin() {
                 }
                    
               </div>
-  
+              <br />
+              <footer className="page-footer font-small white pt-4">
+                    <div className="footer-copyright text-center py-3">© 2022 Copyright : 
+                        <a href="https://relevel.com">&nbsp;Relevel by Unacademy</a>
+                    </div>
+                </footer>
           </div>
       )
   

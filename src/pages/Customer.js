@@ -4,7 +4,8 @@ import { ExportCsv, ExportPdf } from '@material-table/exporters';
 import { Modal, Button } from 'react-bootstrap'
 import Sidebar from '../components/Sidebar'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import '../styles/admin.css';
+import '../styles/customer.css';
+
 import {fetchTicket,ticketCreation,ticketUpdation} from '../api/tickets.js'
 
 
@@ -21,7 +22,6 @@ function User() {
         const updateSelectedCurrTicket = (data) => setSelectedCurrTicket(data)
         
         const [message, setMessage] = useState("");
-        const currUserName = useState(localStorage.getItem("name"));
 
         useEffect(() => {
           (async () => {
@@ -138,10 +138,10 @@ function User() {
 
   
       return (
-          <div className="bg-light">
+          <div className="bg-light  min-vh-100">
               <div className="col-1"><Sidebar home='/' /></div>
-              <div className="container vh-100">
-                  <h3 className="text-primary text-center">Welcome, {currUserName}</h3>
+              <div className="container">
+                  <h3 className="text-primary text-center">Welcome, {localStorage.getItem("name")}</h3>
                   <p className="text-muted text-center">Take a quick looks at your admin stats below. </p>
   
                   {/* card */}
@@ -358,27 +358,32 @@ function User() {
                           <Modal.Body>
                             <form onSubmit={updateTicket} >
                                 <div className="p-1">
-                                      <h5 className="card-subtitle mb-2 text-primary lead">Ticket ID: {selectedCurrTicket.id}</h5>
-                                      <hr />
-                                      <div className="input-group justify-content-center">
+                                    <h5 className="card-subtitle mb-2 text-primary lead">Ticket ID: {selectedCurrTicket.id}</h5>
+                                    <hr />
+                                    <div className="input-group ">
                                         <div className="input-group mb-2 ">
-                                            <span className="input-group-text" id="basic-addon2">Title</span>
+                                            <label className="label input-group-text label-md ">Title</label>
                                             <input type="text" className="form-control" name="title" value={selectedCurrTicket.title} onChange={onTicketUpdate} required/>
-    
-                                        </div>
+                                        </div>                                    
+                                        
                                         <div className="input-group mb-2">
-                                            <span className="input-group-text" id="basic-addon2">Assignee</span>
+                                            <label className="label input-group-text label-md ">Assignee</label>
                                             <input type="text" className="form-control"  value={selectedCurrTicket.assignee} disabled />
                                         </div>
                                         <div className="input-group mb-2">
-                                            <span className="input-group-text" id="basic-addon2">Status</span>
+                                        <label className="label input-group-text label-md ">Status</label>
                                             <select className="form-select" name="status" value={selectedCurrTicket.status} onChange={onTicketUpdate}>
                                                 <option value="OPEN">OPEN</option>
                                                 <option value="CLOSED">CLOSED</option>
                                             </select>
-                                            </div>
+                                        </div>
                                        
-                                        <textarea id="form16" className="form-control mx-3" rows="3"  name="description" placeholder="Description" value={selectedCurrTicket.description}  onChange={onTicketUpdate} required></textarea>
+                                        <div className="input-group mb-2">
+                                          <textarea id="form16" className="form-control " rows="3"  name="description" placeholder="Description" value={selectedCurrTicket.description}  onChange={onTicketUpdate} required></textarea>
+                                      
+                                        </div>
+                                       
+
                                       </div>
                                   </div>
                                 <div className="input-group justify-content-center">
@@ -406,7 +411,13 @@ function User() {
                 
                    
               </div>
-  
+              <br />
+              
+                <footer className="page-footer font-small white pt-4">
+                    <div className="footer-copyright text-center py-3">© 2022 Copyright : 
+                        <a href="https://relevel.com">&nbsp;Relevel by Unacademy</a>
+                    </div>
+                </footer>
           </div>
       )
   
