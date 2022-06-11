@@ -1,13 +1,10 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
-// import { useAuth0 } from "@auth0/auth0-react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
-// import queryString from 'query-string'
 import {userSignin,userSignup} from '../api/auth.js'
 
 function Login() {
-    // const { user,isAuthenticated } = useAuth0();
     const [showSignup, setShowSignup] = useState(false);
     const [message, setMessage] = useState("");
     const [userType, setValue] = useState("CUSTOMER")
@@ -30,9 +27,6 @@ function Login() {
 
     const history = useNavigate();
     const loginFn = (e) => {
-        // const userId = document.getElementById("userId").value;
-        // const password = document.getElementById("password").value;
-
         const userId = userSignUpData.userId;
         const password = userSignUpData.password
 
@@ -116,40 +110,7 @@ function Login() {
         setValue(e)
 
     }
-    // const checkAuth = ()=>{
-    //     if(isAuthenticated){
-    //         const {code} = queryString.parse(window.location.search)
-    //         user.code = code
-    //         userAuthSignin(user).then(function (response) {
-    //         if (response.status === 200) {
-    //             if (response.data.message) {
-    //                 setMessage(response.data.message)
-    //             }
-    //             else {
-    //                 localStorage.setItem("name", response.data.name)
-    //                 localStorage.setItem("userId", response.data.userId);
-    //                 localStorage.setItem("email", response.data.email);
-    //                 localStorage.setItem("userTypes", response.data.userTypes);
-    //                 localStorage.setItem("userStatus", response.data.userStatus);
-    //                 localStorage.setItem("token", response.data.accessToken);
-    //                 if (response.data.userTypes === "CUSTOMER")
-    //                     history('/customer');
-    //                 else if ((response.data.userTypes === "ENGINEER"))
-    //                     history('/engineer');
-    //                 else
-    //                     history('/admin');                 
-    //                 }
-    //         }
-    //     })
-    //     .catch(function (error) {
-    //         if(error.response.status===400 || error.response.status===401)
-    //             console.log(error.response.data.message);
-    //         else
-    //             console.log(error);
-    //     });
-    //     }
-    //     return isAuthenticated
-    // }
+
     return (
 
         <div id="loginPage">

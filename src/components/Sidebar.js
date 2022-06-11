@@ -1,15 +1,10 @@
 import { CSidebar, CSidebarNav, CNavTitle, CNavItem } from '@coreui/react';
 import '../styles/sidebar.css'
-// import { useAuth0 } from '@auth0/auth0-react';
 
 
 function Sidebar() {
-  // const {isAuthenticated, logout } = useAuth0();
   const logoutFn=()=>{
     localStorage.clear();
-    // if(isAuthenticated)
-    //   logout()
-    // else
       window.location.href ="/"
   }
   return (
