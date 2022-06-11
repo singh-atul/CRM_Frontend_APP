@@ -3,13 +3,6 @@
 
 This code base contains logic/structure  for creating the User Interface for the CRM app
 
-## Features
-* User Handling
-  * Added OAuth to allow customer to login using third party api
-  * OAuth supports login with OAuth2, github and google
-  * Once the user is authenticated by the OAuth application, its corresponding account gets created in the crm database
-  * Any user logged in using Oauth is set to CUSTOMER
-
 
 
 ## How is the code organized in this repo ?
