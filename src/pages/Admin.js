@@ -82,6 +82,7 @@ function Admin() {
                   let idx = userList.findIndex((obj => obj.userId === userDetail.userId));
                   userList[idx] = userDetail
                   closeUserModal();
+                  setMessage("User detail updated successfully");
   
               }
           })
@@ -273,7 +274,7 @@ function Admin() {
 
                  <hr />
                 
-                  <div>{message}</div>
+                  <div className="text-success">{message}</div>
                   {/* <MuiThemeProvider theme={theme}> */}
                   <MaterialTable
                       onRowClick={(event, rowData) => fetchUsers(rowData.userId)}
@@ -559,9 +560,9 @@ function Admin() {
                    
               </div>
               <br />
-              <footer className="page-footer font-small white pt-4">
-                    <div className="footer-copyright text-center py-3">© 2022 Copyright : 
-                        <a href="https://relevel.com">&nbsp;Relevel by Unacademy</a>
+              <footer className="page-footer">
+                    <div className="text-center py-3">© 2022 Copyright:
+                        <a href="https://relevel.com">Relevel by Unacademy</a>
                     </div>
                 </footer>
           </div>

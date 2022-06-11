@@ -3,21 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import {userSignin,userSignup} from '../api/auth.js'
-
 function Login() {
     const [showSignup, setShowSignup] = useState(false);
     const [message, setMessage] = useState("");
     const [userType, setValue] = useState("CUSTOMER")
     const [userSignUpData,setUserSignUpData] = useState({})
-
+    const navigate = useNavigate();
     useEffect(() => {
+        console.log(localStorage.getItem("token"),localStorage.getItem("userTypes"))
             if(localStorage.getItem("token")){
                 if ( localStorage.getItem("userTypes")=== "CUSTOMER")
-                    history('/customer');
+                    navigate('/customer');
                 else if ((localStorage.getItem("userTypes") === "ENGINEER"))
-                    history('/engineer'); 
+                    navigate('/engineer'); 
                 else
-                    history('/admin');          
+                    navigate('/admin');          
                 }
         
             
@@ -173,8 +173,8 @@ function Login() {
                 right: 0,
                 backgroundColor: "white"
                 }}>
-                <footer className="page-footer font-small blue pt-4">
-                    <div className="footer-copyright text-center py-3">© 2022 Copyright:
+                <footer className="page-footer">
+                    <div className="text-center py-3">© 2022 Copyright:
                         <a href="https://relevel.com">Relevel by Unacademy</a>
                     </div>
                 </footer>

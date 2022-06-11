@@ -413,9 +413,9 @@ function User() {
               </div>
               <br />
               
-                <footer className="page-footer font-small white pt-4">
-                    <div className="footer-copyright text-center py-3">© 2022 Copyright : 
-                        <a href="https://relevel.com">&nbsp;Relevel by Unacademy</a>
+              <footer className="page-footer">
+                    <div className="text-center py-3">© 2022 Copyright:
+                        <a href="https://relevel.com">Relevel by Unacademy</a>
                     </div>
                 </footer>
           </div>
