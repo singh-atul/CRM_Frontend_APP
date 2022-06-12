@@ -9,6 +9,14 @@ import '../styles/common.css';
 
 import {fetchTicket,ticketUpdation} from '../api/tickets.js'
 import {getAllUser,updateUserData} from '../api/user.js'
+
+
+const logoutFn=()=>{
+    localStorage.clear();
+      window.location.href ="/"
+  }
+
+
 function Admin() {    
         const [userList, setUserList] = useState([]);
         const [userDetail, setUserDetail] = useState({});
@@ -31,7 +39,6 @@ function Admin() {
           (async () => {
               fetchUsers("")
               fetchTickets()
-              
           })();
           // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);
@@ -44,6 +51,7 @@ function Admin() {
                       setUserDetail(response.data[0])
                       showUserModal()
                   }
+                  
                   else
                       setUserList(response.data);
               }
@@ -63,8 +71,8 @@ function Admin() {
             })
                 .catch(function (error) {
                     if(error.response.status===401){
-                        localStorage.clear();
-                        window.location.href ="/"
+                        logoutFn();
+                          
                     }
                     console.log(error);
                 });
@@ -89,6 +97,10 @@ function Admin() {
               .catch(function (error) {
                   if (error.status === 400)
                       setMessage(error.message);
+                 else if(error.response.status===401){
+                        logoutFn();
+                          
+                    }
                   else
                       console.log(error);
               });
@@ -157,7 +169,7 @@ function Admin() {
 
     const updateTicket = (e) =>{
         e.preventDefault()
-        
+        console.log("In ticket");
         ticketUpdation(selectedCurrTicket.id,selectedCurrTicket).then(function (response){
             setMessage("Ticket Updated Successfully");
             closeTicketUpdationModal();
@@ -167,8 +179,7 @@ function Admin() {
             if (error.response.status === 400)
                 setMessage(error.message);
             else if(error.response.status === 401)
-                setMessage("Authorization error, retry loging in");
-                closeTicketUpdationModal();
+                logoutFn();
                 
             console.log(error.response.message);
         })

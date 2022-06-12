@@ -7,6 +7,12 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import {ticketUpdation,fetchTicket} from '../api/tickets'
 import '../styles/engineer.css';
 import '../styles/common.css';
+const logoutFn=()=>{
+    localStorage.clear();
+      window.location.href ="/"
+  }
+
+
 function Engineer() {
   const [ticketDetails, setTicketDetails] = useState([]);
   const [ticketUpdateModal, setTicketUpdateModal] = useState(false);
@@ -56,8 +62,7 @@ function Engineer() {
         .catch(function (error) {
             if(error.response.status===401)
             {
-               localStorage.clear();
-              window.location.href ="/"
+               logoutFn()
             }
             console.log(error);
         });

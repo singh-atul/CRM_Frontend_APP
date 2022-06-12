@@ -7,6 +7,10 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import '../styles/customer.css';
 import '../styles/common.css';
 import {fetchTicket,ticketCreation,ticketUpdation} from '../api/tickets.js'
+const logoutFn=()=>{
+    localStorage.clear();
+      window.location.href ="/"
+  }
 
 
 function User() {
@@ -30,6 +34,8 @@ function User() {
           // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);
 
+       
+          
         const updateTicketCounts = (tickets) =>{
             const data = {
                 pending:0,
@@ -60,8 +66,8 @@ function User() {
           })
               .catch(function (error) {
                 if(error.response.status === 401){
-                    localStorage.clear();
-                    window.location.href ="/"
+                        logoutFn();
+
                   }
 
 
@@ -100,8 +106,7 @@ function User() {
             if (error.status === 400)
                 setMessage(error.message);
             else if(error.status === 401)
-                setMessage("Authorization error, retry loging in");
-                closeTicketUpdationModal();
+            logoutFn();
                 
             console.log(error.message);
         })

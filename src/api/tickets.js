@@ -23,6 +23,7 @@ export async function ticketCreation(data) {
 }
 
 export async function ticketUpdation(id,selectedCurrTicket) {
+    console.log(selectedCurrTicket)
     return await axios.put(`${BASE_URL}/crm/api/v1/tickets/${id}`,selectedCurrTicket, {
         headers: {
             'x-access-token': localStorage.getItem("token")
