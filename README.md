@@ -21,7 +21,6 @@ The whole repo is divided into multiple branches. Each branch contains code for 
 * It is expected that the session_1 is up and running in your 
 ```sh
 cd crm_frontend
-npm install query-string @auth0/auth0-react
 npm start
 ```
 React application will run on port 3005. You can configure it in .env
