@@ -81,8 +81,11 @@ const updateTicket = (e) =>{
   }).catch(function (error){
       if (error.status === 400)
           setMessage(error.message);
-      else if(error.status === 401)
+      else if(error.response.status === 401)
+          {
+            logoutFn()
           setMessage("Authorization error, retry loging in");
+          }
           closeTicketUpdationModal();
           
       console.log(error.message);
@@ -315,7 +318,7 @@ return (
                                 
                                 <div className="input-group mb-3">
                                 <label className="label input-group-text label-md ">PRIORITY</label>
-                                          <input type="text" className="form-control" name="ticketPriority" value={selectedCurrTicket.ticketPriority} onChange={onTicketUpdate} required/>
+                                          <input type="number" className="form-control" name="ticketPriority" value={selectedCurrTicket.ticketPriority} onChange={onTicketUpdate} min="1" max="5" required/><p className="text-danger">*</p>
   
                                 </div>
                                 <div className="input-group mb-3">
@@ -343,6 +346,7 @@ return (
                          
                           
                       </form>
+                      <p className="text-danger">* This field accept only number</p>
                     </Modal.Body>
                     <Modal.Footer>
                     </Modal.Footer>
@@ -359,7 +363,7 @@ return (
         </div>
         <br />
 
-        <footer className="page-footer">
+        <footer>
                     <div className="text-center py-3">© 2022 Copyright:
                         <a href="https://relevel.com">Relevel by Unacademy</a>
                     </div>

@@ -169,7 +169,6 @@ function Admin() {
 
     const updateTicket = (e) =>{
         e.preventDefault()
-        console.log("In ticket");
         ticketUpdation(selectedCurrTicket.id,selectedCurrTicket).then(function (response){
             setMessage("Ticket Updated Successfully");
             closeTicketUpdationModal();
@@ -180,8 +179,9 @@ function Admin() {
                 setMessage(error.message);
             else if(error.response.status === 401)
                 logoutFn();
+            else
+                console.log(error);
                 
-            console.log(error.response.message);
         })
 
 
@@ -285,7 +285,8 @@ function Admin() {
 
                  <hr />
                 
-                  <div className="text-success">{message}</div>
+                  <div className="text-success">{message.includes("User") ? message : ""}</div>
+                  
                   {/* <MuiThemeProvider theme={theme}> */}
                   <MaterialTable
                       onRowClick={(event, rowData) => fetchUsers(rowData.userId)}
@@ -349,6 +350,8 @@ function Admin() {
                   />
                   {/* </MuiThemeProvider>  */}
                   <br />
+                  <div className="text-success">{message.includes("Ticke") ? message : ""}</div>
+
                   <MaterialTable
                       onRowClick={(event,rowData) => editTicket(rowData)}
   
@@ -510,7 +513,7 @@ function Admin() {
 
                                       <div className="input-group mb-3">
                                       <label className="label input-group-text label-md ">PRIORITY</label>
-                                          <input type="text" className="form-control" name="ticketPriority" value={selectedCurrTicket.ticketPriority} onChange={onTicketUpdate} required/>
+                                        <input type="number" className="form-control" name="ticketPriority" value={selectedCurrTicket.ticketPriority} onChange={onTicketUpdate} min="1" max="5" required/><p className="text-danger">*</p>
   
                                       </div>
 
@@ -557,6 +560,7 @@ function Admin() {
                                 </div>
                                
                             </form>
+                            <p className="text-danger">* This field accept only number</p>
                           </Modal.Body>
                           <Modal.Footer>
                           </Modal.Footer>
@@ -571,12 +575,13 @@ function Admin() {
                    
               </div>
               <br />
-              <footer className="page-footer">
+              <footer>
                     <div className="text-center py-3">© 2022 Copyright:
                         <a href="https://relevel.com">Relevel by Unacademy</a>
                     </div>
                 </footer>
           </div>
+          
       )
   
   }

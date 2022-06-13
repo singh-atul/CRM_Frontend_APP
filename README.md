@@ -3,7 +3,12 @@
 
 This code base contains logic/structure  for creating the User Interface for the CRM app
 
+# Environment File:
+REACT_APP_SERVER_URL = URL to the backend server
+GENERATE_SOURCEMAP : To remove any .map files that might lead to warning. 
 
+Note: Pushing of .env file in git repo is not advisable as it might contain sensitive data. 
+This particular project is for learning purpose, so I have uploaded the environment file.
 
 ## How is the code organized in this repo ?
 The whole repo is divided into multiple branches. Each branch contains code for a specific concept. For example _session1_ has the code base for user registration and login . Each branch is built on the top of the previous branch

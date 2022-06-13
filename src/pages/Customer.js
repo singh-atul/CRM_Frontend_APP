@@ -87,9 +87,13 @@ function User() {
             fetchTickets();
 
         }).catch(function (error){
-            if (error.status === 400)
+            if (error.response.status === 400)
                     setMessage(error.message);
-            else
+                    else if(error.response.status === 401)
+                    {
+                      logoutFn()
+                    }
+                    else
                 console.log(error);
         })
 
@@ -103,9 +107,9 @@ function User() {
             fetchTickets();
 
         }).catch(function (error){
-            if (error.status === 400)
+            if (error.response.status === 400)
                 setMessage(error.message);
-            else if(error.status === 401)
+            else if(error.response.status === 401)
             logoutFn();
                 
             console.log(error.message);
@@ -418,7 +422,7 @@ function User() {
               </div>
               <br />
               
-              <footer className="page-footer">
+              <footer>
                     <div className="text-center py-3">© 2022 Copyright:
                         <a href="https://relevel.com">Relevel by Unacademy</a>
                     </div>

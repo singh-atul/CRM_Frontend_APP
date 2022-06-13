@@ -1,16 +1,19 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import '../styles/login.css';
 import { Dropdown, DropdownButton } from "react-bootstrap";
-import {userSignin,userSignup} from '../api/auth.js'
+import {userSignin,userSignup} from '../api/auth'
+import '../styles/login.css';
 function Login() {
     const [showSignup, setShowSignup] = useState(false);
     const [message, setMessage] = useState("");
-    const [userType, setValue] = useState("CUSTOMER")
-    const [userSignUpData,setUserSignUpData] = useState({})
+
+    const [userId,setUserId] = useState("")
+    const [userPassword,setUserPassword] = useState("")
+    const [userName,setUserName] = useState("")
+    const [userEmail,setUserEmail] = useState("")
+    const [userType, setUserType] = useState("CUSTOMER")
     const navigate = useNavigate();
     useEffect(() => {
-        console.log(localStorage.getItem("token"),localStorage.getItem("userTypes"))
             if(localStorage.getItem("token")){
                 if ( localStorage.getItem("userTypes")=== "CUSTOMER")
                     navigate('/customer');
@@ -27,17 +30,13 @@ function Login() {
 
     const history = useNavigate();
     const loginFn = (e) => {
-        const userId = userSignUpData.userId;
-        const password = userSignUpData.password
-
 
         const data = {
-            userId: userId,
-            password: password
+            userId,
+            password:userPassword
         };
         e.preventDefault();
         userSignin(data).then(function (response) {
-                
                 if (response.status === 200) {
                     if (response.data.message) {
                         setMessage(response.data.message)
@@ -57,33 +56,28 @@ function Login() {
                             history('/admin');          
                         }
                 }
+                clearState()
             })
             .catch(function (error) {
-                if(error.response.status===401)
-                setMessage(error.response.data.message);
-            else
-                console.log(error);
+                
+                  setMessage(error.response.data.message);
+
             });
     }
 
     const signupFn = (e) => {
-        const username =  userSignUpData.username;
-        const userId = userSignUpData.userId;
-        const email = userSignUpData.email;
-        const password = userSignUpData.password
-
-
         const data = {
-            name: username,
+            name: userName,
             userId: userId,
-            email: email,
+            email: userEmail,
             userType: userType,
-            password: password
+            password: userPassword
         };
         e.preventDefault();
         userSignup(data).then(function (response) {
                 if (response.status === 201) {
-                   history(0);
+                  setShowSignup(false)
+                  setMessage("User Authenticated Successfully...")
                 }
             })
             .catch(function (error) {
@@ -95,22 +89,40 @@ function Login() {
     }
 
     const  updateSignupData =(e)=>{
-        userSignUpData[e.target.id]=e.target.value;
+        if(e.target.id === "userId")
+          setUserId(e.target.value)
+        else if(e.target.id === "password")
+          setUserPassword(e.target.value)
+        else if(e.target.id === "password")
+          setUserPassword(e.target.value)
+        else if(e.target.id === "username")
+          setUserName(e.target.value)
+        else
+          setUserEmail(e.target.value)
     }
 
     const toggleSignup = () => {
-
+        clearState();
         setShowSignup(!showSignup);
-        if(showSignup){
-            setUserSignUpData({});
-    }
+        
     }
 
     const handleSelect = (e) => {
-        setValue(e)
+        setUserType(e)
 
     }
 
+    const clearState = () => {
+        setMessage("")
+        setUserId("")
+        setUserPassword("")
+        setUserName("")
+        setUserEmail("")
+    
+
+    }
+
+    
     return (
 
         <div id="loginPage">
@@ -120,19 +132,18 @@ function Login() {
                     <div className="row m-2 ">
                                     <div >
                                         <h4 className="text-center ">{showSignup ? 'Sign up' : 'Login'}</h4>
-                                            
                                             <form  onSubmit={showSignup ? signupFn: loginFn}>
                                                 <div className="input-group ">
-                                                    <input type="text" className="form-control" placeholder="User Id" id="userId" onChange={updateSignupData}  autoFocus required />
+                                                    <input type="text" className="form-control" placeholder="User Id" id="userId" value={userId} onChange={updateSignupData}  autoFocus required />
                                                 
                                                 </div>
-                                                <input type="password" className="form-control" placeholder="Password"  id="password" onChange={updateSignupData} required/>
+                                                <input type="password" className="form-control" placeholder="Password"  id="password" value={userPassword} onChange={updateSignupData} required/>
                                                 {showSignup && <>
                                                 <div className="input-group ">
-                                                    <input type="text" className="form-control" placeholder="Username" id="username" onChange={updateSignupData} required />
+                                                    <input type="text" className="form-control" placeholder="Username" id="username" value={userName} onChange={updateSignupData} required />
                                                 </div>
                                                 <div className="input-group ">    
-                                                    <input type="text" className="form-control" placeholder="Email" id="email" onChange={updateSignupData} required/>
+                                                    <input type="text" className="form-control" placeholder="Email" id="email" value={userEmail} onChange={updateSignupData} required/>
                                                 </div>    
                                                 <div className="row">
                                                     <div className="col">
@@ -161,7 +172,6 @@ function Login() {
                                                 <div className="auth-error-msg text-danger text-center">{message}</div>
                                             </form>
                                     </div>
-                                
                     </div>
                 </div>
             
@@ -173,7 +183,7 @@ function Login() {
                 right: 0,
                 backgroundColor: "white"
                 }}>
-                <footer className="page-footer">
+                <footer>
                     <div className="text-center py-3">© 2022 Copyright:
                         <a href="https://relevel.com">Relevel by Unacademy</a>
                     </div>
@@ -186,3 +196,6 @@ function Login() {
 }
 
 export default Login;
+
+
+  
