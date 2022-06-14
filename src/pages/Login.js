@@ -79,17 +79,17 @@ function Login() {
         e.preventDefault();
         if(userId.length<5){
             setError(true)
-            setMessage("UserId should be of 5 to 10 charactersssssssssssssssssssssssssssss")
+            setMessage("UserId should be of 5 to 10 characters ...")
             return
         }
         else if(userPassword.length<5 || userPassword.length>12){
             setError(true)
-            setMessage("Password should be 5 to 10 character")
+            setMessage("Password should be 5 to 10 characters ...")
             return
         }
         else if(userName.length<5 || userName.length>12){
             setError(true)
-            setMessage("UserName should be 5 to 10 character")
+            setMessage("UserName should be 5 to 10 characters ...")
             return
         }
         
