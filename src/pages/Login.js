@@ -79,17 +79,17 @@ function Login() {
         e.preventDefault();
         if(userId.length<5){
             setError(true)
-            setMessage("UserId should be of 5 to 10 characters ...")
+            setMessage("'User Id' should be of 5 to 10 characters ...")
             return
         }
         else if(userPassword.length<5 || userPassword.length>12){
             setError(true)
-            setMessage("Password should be 5 to 10 characters ...")
+            setMessage(" 'Password' should be 5 to 10 characters ...")
             return
         }
         else if(userName.length<5 || userName.length>12){
             setError(true)
-            setMessage("UserName should be 5 to 10 characters ...")
+            setMessage("'User Name' should be 5 to 10 characters ...")
             return
         }
         
@@ -153,10 +153,9 @@ function Login() {
     
     return (
 
-        <div id="loginPage">
-            <div id="loginPage" className="bg-primary d-flex justify-content-center align-items-center vh-100" >
-
-                <div className="card m-5 p-5 " style={!showSignup ? {'min-width': '35%','max-width':'35%','min-height':'35%','max-height':'40%'} : {'min-width': '35%','max-width':'35%','min-height':'60%','max-height':'60%'}}>
+        <div>
+            <div className="bg-primary d-flex justify-content-center align-items-center vh-100" >
+                <div className={!showSignup ? " card card-signin m-5 p-5" : "card card-signup m-5 p-5"} >
                     <div className="row m-2 ">
                                     <div >
                                         <h4 className="text-center ">{showSignup ? 'Sign up' : 'Login'}</h4>
@@ -168,7 +167,7 @@ function Login() {
                                                 <input type="password" className="form-control" placeholder="Password"  id="password" value={userPassword} onChange={updateSignupData}  required/>
                                                 {showSignup && <>
                                                 <div className="input-group ">
-                                                    <input type="text" className="form-control" placeholder="Username" id="username" value={userName} onChange={updateSignupData} required />
+                                                    <input type="text" className="form-control" placeholder="User Name" id="username" value={userName} onChange={updateSignupData} required />
                                                 </div>
                                                 <div className="input-group ">    
                                                     <input type="text" className="form-control" placeholder="Email" id="email" value={userEmail} onChange={updateSignupData} required/>

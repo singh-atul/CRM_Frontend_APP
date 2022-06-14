@@ -5,3 +5,18 @@
 input{
     margin-bottom: 5px;
 }
+.card-signin{
+    min-width:35%;
+    max-width:35%;
+    min-height:35%;
+    max-height:35%;
+    
+
+}
+
+.card-signup{
+    min-width:35%;
+    max-width:35%;
+    min-height:60%;
+    max-height:60%;
+}
