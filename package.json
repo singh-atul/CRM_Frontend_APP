@@ -2,6 +2,9 @@
   "name": "crm_frontend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "14.17.6"
+  },
   "dependencies": {
     "@coreui/coreui": "^4.1.5",
     "@coreui/react": "^4.2.0",
