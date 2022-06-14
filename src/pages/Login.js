@@ -12,6 +12,8 @@ function Login() {
     const [userName,setUserName] = useState("")
     const [userEmail,setUserEmail] = useState("")
     const [userType, setUserType] = useState("CUSTOMER")
+    const [errorState,setError]  = useState(false)
+
     const navigate = useNavigate();
     useEffect(() => {
             if(localStorage.getItem("token")){
@@ -39,6 +41,7 @@ function Login() {
         userSignin(data).then(function (response) {
                 if (response.status === 200) {
                     if (response.data.message) {
+                        setError(true)
                         setMessage(response.data.message)
                     }
                     else {
@@ -59,7 +62,7 @@ function Login() {
                 clearState()
             })
             .catch(function (error) {
-                
+                  setError(true)
                   setMessage(error.response.data.message);
 
             });
@@ -77,18 +80,25 @@ function Login() {
         userSignup(data).then(function (response) {
                 if (response.status === 201) {
                   setShowSignup(false)
-                  setMessage("User Authenticated Successfully...")
+                  clearState()
+                  setError(false)
+                  setMessage("User Signed Up Successfully...")
                 }
             })
             .catch(function (error) {
                 if(error.response.status===400)
+                {
+                    setError(true)
                     setMessage(error.response.data.message);
+                
+                    }    
                 else
                     console.log(error);
             });
     }
 
     const  updateSignupData =(e)=>{
+        setMessage("")
         if(e.target.id === "userId")
           setUserId(e.target.value)
         else if(e.target.id === "password")
@@ -114,6 +124,7 @@ function Login() {
 
     const clearState = () => {
         setMessage("")
+        setError(false)
         setUserId("")
         setUserPassword("")
         setUserName("")
@@ -169,7 +180,7 @@ function Login() {
                                                     <input type="submit" className="form-control btn btn-primary" value={showSignup ? "Sign Up" : "Log In"} />
                                                 </div>
                                                 <div className="signup-btn text-center" onClick={toggleSignup}>{showSignup ? 'Already have an Account ? Login' : "Don't have an Account? Signup"}</div>
-                                                <div className="auth-error-msg text-danger text-center">{message}</div>
+                                                <div className={errorState ? "text-danger text-center" : "text-success text-center" }>{message}</div>
                                             </form>
                                     </div>
                     </div>
