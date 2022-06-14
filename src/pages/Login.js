@@ -12,7 +12,7 @@ function Login() {
     const [userName,setUserName] = useState("")
     const [userEmail,setUserEmail] = useState("")
     const [userType, setUserType] = useState("CUSTOMER")
-    const [errorState,setError]  = useState(false)
+    const [error,setError]  = useState(false)
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -180,7 +180,7 @@ function Login() {
                                                     <input type="submit" className="form-control btn btn-primary" value={showSignup ? "Sign Up" : "Log In"} />
                                                 </div>
                                                 <div className="signup-btn text-center" onClick={toggleSignup}>{showSignup ? 'Already have an Account ? Login' : "Don't have an Account? Signup"}</div>
-                                                <div className={errorState ? "text-danger text-center" : "text-success text-center" }>{message}</div>
+                                                <div className={error ? "text-danger text-center" : "text-success text-center" }>{message}</div>
                                             </form>
                                     </div>
                     </div>
