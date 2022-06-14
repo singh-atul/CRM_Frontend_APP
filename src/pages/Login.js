@@ -77,6 +77,23 @@ function Login() {
             password: userPassword
         };
         e.preventDefault();
+        if(userId.length<5){
+            setError(true)
+            setMessage("UserId should be of 5 to 10 character")
+            return
+        }
+        else if(userPassword.length<5 || userPassword.length>12){
+            setError(true)
+            setMessage("Password should be 5 to 10 character")
+            return
+        }
+        else if(userName.length<5 || userName.length>12){
+            setError(true)
+            setMessage("UserName should be 5 to 10 character")
+            return
+        }
+        
+        
         userSignup(data).then(function (response) {
                 if (response.status === 201) {
                   setShowSignup(false)
@@ -139,7 +156,7 @@ function Login() {
         <div id="loginPage">
             <div id="loginPage" className="bg-primary d-flex justify-content-center align-items-center vh-100">
 
-                <div className="card m-5 p-5 " >
+                <div className="card m-5 p-5 " max-width="30">
                     <div className="row m-2 ">
                                     <div >
                                         <h4 className="text-center ">{showSignup ? 'Sign up' : 'Login'}</h4>
@@ -148,7 +165,7 @@ function Login() {
                                                     <input type="text" className="form-control" placeholder="User Id" id="userId" value={userId} onChange={updateSignupData}  autoFocus required />
                                                 
                                                 </div>
-                                                <input type="password" className="form-control" placeholder="Password"  id="password" value={userPassword} onChange={updateSignupData} required/>
+                                                <input type="password" className="form-control" placeholder="Password"  id="password" value={userPassword} onChange={updateSignupData}  required/>
                                                 {showSignup && <>
                                                 <div className="input-group ">
                                                     <input type="text" className="form-control" placeholder="Username" id="username" value={userName} onChange={updateSignupData} required />
@@ -180,7 +197,7 @@ function Login() {
                                                     <input type="submit" className="form-control btn btn-primary" value={showSignup ? "Sign Up" : "Log In"} />
                                                 </div>
                                                 <div className="signup-btn text-center" onClick={toggleSignup}>{showSignup ? 'Already have an Account ? Login' : "Don't have an Account? Signup"}</div>
-                                                <div className={error ? "text-danger text-center" : "text-success text-center" }>{message}</div>
+                                                <div className={error ? "text-danger text-center" : "text-success text-center" } >{message}</div>
                                             </form>
                                     </div>
                     </div>
@@ -196,7 +213,7 @@ function Login() {
                 }}>
                 <footer>
                     <div className="text-center py-3">© 2022 Copyright:
-                        <a href="https://relevel.com">Relevel by Unacademy</a>
+                        <a href="https://relevel.com" target="_blank" rel="noopener noreferrer">Relevel by Unacademy</a>
                     </div>
                 </footer>
             </div>

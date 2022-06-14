@@ -365,7 +365,7 @@ return (
 
         <footer>
                     <div className="text-center py-3">© 2022 Copyright:
-                        <a href="https://relevel.com">Relevel by Unacademy</a>
+                        <a href="https://relevel.com" target="_blank" rel="noopener noreferrer">Relevel by Unacademy</a>
                     </div>
                 </footer>
             
