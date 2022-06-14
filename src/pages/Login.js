@@ -79,7 +79,7 @@ function Login() {
         e.preventDefault();
         if(userId.length<5){
             setError(true)
-            setMessage("UserId should be of 5 to 10 character")
+            setMessage("UserId should be of 5 to 10 charactersssssssssssssssssssssssssssss")
             return
         }
         else if(userPassword.length<5 || userPassword.length>12){
@@ -154,9 +154,9 @@ function Login() {
     return (
 
         <div id="loginPage">
-            <div id="loginPage" className="bg-primary d-flex justify-content-center align-items-center vh-100">
+            <div id="loginPage" className="bg-primary d-flex justify-content-center align-items-center vh-100" >
 
-                <div className="card m-5 p-5 " style={!showSignup ? {'min-width': '25%','max-width':'25%','min-height':'33%','max-height':'33%'} : {'min-width': '25%','max-width':'25%','min-height':'47%','max-height':'47%'}}>
+                <div className="card m-5 p-5 " style={!showSignup ? {'min-width': '35%','max-width':'35%','min-height':'35%','max-height':'40%'} : {'min-width': '35%','max-width':'35%','min-height':'60%','max-height':'60%'}}>
                     <div className="row m-2 ">
                                     <div >
                                         <h4 className="text-center ">{showSignup ? 'Sign up' : 'Login'}</h4>
@@ -193,7 +193,7 @@ function Login() {
                                                 
                                                 </>
                                                    }
-                                                <div className="input-group">
+                                                <div className="input-group my-2">
                                                     <input type="submit" className="form-control btn btn-primary" value={showSignup ? "Sign Up" : "Log In"} />
                                                 </div>
                                                 <div className="signup-btn text-center" onClick={toggleSignup}>{showSignup ? 'Already have an Account ? Login' : "Don't have an Account? Signup"}</div>
