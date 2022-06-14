@@ -156,7 +156,7 @@ function Login() {
         <div id="loginPage">
             <div id="loginPage" className="bg-primary d-flex justify-content-center align-items-center vh-100">
 
-                <div className="card m-5 p-5 " max-width="30">
+                <div className="card m-5 p-5 " style={!showSignup ? {'min-width': '25%','max-width':'25%','min-height':'33%','max-height':'33%'} : {'min-width': '25%','max-width':'25%','min-height':'47%','max-height':'47%'}}>
                     <div className="row m-2 ">
                                     <div >
                                         <h4 className="text-center ">{showSignup ? 'Sign up' : 'Login'}</h4>
